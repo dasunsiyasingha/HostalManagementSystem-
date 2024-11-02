@@ -1,4 +1,11 @@
-
+<?php
+    session_start();
+    error_reporting(0);
+    include('../includes/config.php');
+    if(strlen($_SESSION['alogin'])==0){ 
+        header('location:../home/home.php');
+    }else{
+?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -19,36 +26,48 @@
                     <h3 class="card-title text-center">Student Register</h3>
                 </div>
                 <div class="card-body">
-                    <form>
+                    <form role="form" method="post">
                         <div class="form-group mb-3">
                             <label for="stid">Student ID</label>
-                            <input type="text" class="form-control" id="stid" placeholder="Enter student ID">
+                            <input type="text" class="form-control" id="stid" name="stid" placeholder="Enter student ID" required>
                         </div>
                         <div class="form-group mb-3">
                             <label for="stname">Student Name</label>
-                            <input type="text" class="form-control" id="stname" placeholder="Enter student name">
+                            <input type="text" class="form-control" id="stname" name="stname" placeholder="Enter student name" required>
                         </div>
                         <div class="form-group mb-3">
                             <label for="stpwsd">Student password</label>
-                            <input type="text" class="form-control" id="stpwsd" placeholder="Enter student password">
+                            <input type="text" class="form-control" id="stpwsd" name="stpwsd" placeholder="Enter student password" required>
                         </div>
                         <div class="form-group mb-3">
                             <label for="stcontact">Contact Number</label>
-                            <input type="text" class="form-control" id="stcontact" placeholder="Enter contact number">
+                            <input type="text" class="form-control" id="stcontact" name="stcontact" placeholder="Enter contact number" required>
                         </div>
                         <!-- Dropdown Input room number -->
                         <div class="form-group mb-3">
                                     <label for="stroom">Room No</label>
                                     <div class="input-group">
-                                        <input type="text" class="form-control" id="stroom" placeholder="Enter student room" aria-label="Student Room" >
+                                        <input type="text" class="form-control" id="stroom" name="stroom"  placeholder="Enter student room" aria-label="Student Room" required>
                                         <button class="btn btn-primary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                                             Dropdown
                                         </button>
                                         <ul class="dropdown-menu">
-                                            <li><a class="dropdown-item" href="#" onclick="stroom('1')">1</a></li>
+                                            <!-- <li><a class="dropdown-item" href="#" onclick="stroom('1')">1</a></li>
                                             <li><a class="dropdown-item" href="#" onclick="stroom('2')">2</a></li>
                                             <li><a class="dropdown-item" href="#" onclick="stroom('3')">3</a></li>
-                                            <li><a class="dropdown-item" href="#" onclick="stroom('4')">4</a></li>
+                                            <li><a class="dropdown-item" href="#" onclick="stroom('4')">4</a></li> -->
+                                           
+                                            <?php
+                                                    
+                                                    $sql = "SELECT roomNo FROM room";
+                                                    $results = $conn->query($sql);
+
+                                                    if($results->num_rows > 0)
+                                                    {
+                                                    foreach($results as $result)
+                                                     {?>
+                                                        <li <a class="dropdown-item" href="#" onclick="stroom('<?php echo htmlentities($result['roomNo']); ?>')" ><?php echo htmlentities($result['roomNo']); ?></a></li>
+                                                <?php  }}?>
                                         </ul>
                                     </div>
                                 </div>
@@ -58,7 +77,7 @@
                             <div class="form-group mb-3">
                                     <label for="stbatch">Batch</label>
                                     <div class="input-group">
-                                        <input type="text" class="form-control" id="stbatch" placeholder="Enter student Batch" aria-label="Student Room" >
+                                        <input type="text" class="form-control" id="stbatch" name="stbatch" placeholder="Enter student Batch" aria-label="Student Room" required>
                                         <button class="btn btn-primary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                                             Dropdown
                                         </button>
@@ -86,7 +105,7 @@
 
                                 <div class="card-action text-center d-flex justify-content-between">
                                                     <button class="btn"></button>
-                                                    <button class="btn btn-success ">Submit</button>
+                                                    <button type="submit" name="login" id="login" class="btn btn-success ">Submit</button>
                                  </div>
                     </form>
                 </div>
@@ -102,5 +121,5 @@
     <?php include '../libraries/script.php';?>
     
 </body>
-</html>
+</html> <?php }?>
 
