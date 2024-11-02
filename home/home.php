@@ -18,25 +18,25 @@
         <div class="row justify-content-center align-items-center w-100"> 
 
             <div class="col-md-4 d-flex justify-content-center">
-                <div class="card card-secondary" style="width: 250px; height: 200px; cursor: pointer;" role="button" onclick="location.href='../admin/adlogin.php';">
+                <div class="card card-secondary" style="width: 290px; height: 200px; cursor: pointer;" role="button" onclick="location.href='../admin/adlogin.php';">
                     <div class="card-body skew-shadow position-relative">
-                        <h5 class="op-8 text-center position-absolute top-50 start-50 translate-middle fs-2">ADMIN SIGNIN</h5>
+                        <h5 class="op-8 text-center position-absolute top-50 start-50 translate-middle fs-2">ADMIN SIGN IN</h5>
                     </div>
                 </div>
             </div>
 
             <div class="col-md-4 d-flex justify-content-center">
-                <div class="card card-secondary bg-secondary-gradient" style="width: 250px; height: 200px; cursor: pointer;" role="button" onclick="location.href='../student/stlogin.php';">
+                <div class="card card-secondary bg-secondary-gradient" style="width: 290px; height: 200px; cursor: pointer;" role="button" onclick="location.href='../student/stlogin.php';">
                     <div class="card-body bubble-shadow position-relative">
-                        <h5 class="op-8 text-center position-absolute top-50 start-50 translate-middle fs-2">STUDENT SIGNIN</h5>
+                        <h5 class="op-8 text-center position-absolute top-50 start-50 translate-middle fs-2">STUDENT SIGN IN</h5>
                     </div>
                 </div>
             </div>
 
             <div class="col-md-4 d-flex justify-content-center">
-                <div class="card card-secondary bg-secondary-gradient" style="width: 250px; height: 200px; cursor: pointer;" role="button" onclick="location.href='../securityPersons/selogin.php';">
+                <div class="card card-secondary bg-secondary-gradient" style="width: 290px; height: 200px; cursor: pointer;" role="button" onclick="location.href='../securityPersons/selogin.php';">
                     <div class="card-body curves-shadow position-relative">
-                        <h5 class="op-8 text-center position-absolute top-50 start-50 translate-middle fs-2">SECURITY PERSON SIGNIN</h5>
+                        <h5 class="op-8 text-center position-absolute top-50 start-50 translate-middle fs-2">SECURITY PERSON SIGN IN</h5>
                     </div>
                 </div>
             </div>
