@@ -1,3 +1,14 @@
+<?php
+  session_start();
+  error_reporting(0);
+
+  include('../includes/config.php');
+
+  if($_SESSION['stlogin']!=''){
+    $_SESSION['stlogin']='';
+  }
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -40,16 +51,22 @@
 
   <main class="d-flex align-items-center justify-content-center" style="height: 100vh;">
     <div class="bg-white p-5 rounded-3 shadow" style="min-width: 500px; width: 100%;">
-      <form>
+      
+    <form role="form" method="post">
         <h1 class="h3 mb-3 fw-normal text-center">Student sign in</h1>
 
+
+        <small class="form-check-label text-danger" id="notice" style="visibility: hidden;">
+            Invalid Details.. Please Try Again!
+        </small>
+
         <div class="form-floating mb-3">
-          <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com">
-          <label for="floatingInput">Email address</label>
+          <input type="text" class="form-control" name="studentid" id="studentid" placeholder="Enter your Student Id">
+          <label for="studentid">Student Id</label>
         </div>
         <div class="form-floating">
-          <input type="password" class="form-control" id="floatingPassword" placeholder="Password">
-          <label for="floatingPassword">Password</label>
+          <input type="password" class="form-control" name="password"  id="password" placeholder="Enter your Password">
+          <label for="password">Password</label>
         </div>
 
         <div class="form-check text-start my-3">
@@ -58,13 +75,58 @@
             Remember me
           </label>
         </div>
-        <button class="btn btn-primary w-100 py-2" type="submit">Sign in</button>
+        <button type="submit" name="login" data-mdb-button-init data-mdb-ripple-init class="btn btn-primary w-100 py-2" >Sign in</button>
         
       </form>
     </div>
   </main>
 
   <script src="/docs/5.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+  <script>
+    document.getElementById("studentid").addEventListener("change", hideNotice);
+    document.getElementById("password").addEventListener("change", hideNotice);
+  
+    function hideNotice(){
+      console.log("clicked");
+      document.getElementById("notice").style.visibility = "hidden";
+    }
 
+  </script>
+
+  <?php
+    if(isset($_POST['login'])){
+
+      $studentid = $_POST['studentid'];
+      $password = $_POST['password'];
+  
+      
+  
+      if(empty($studentid)){
+        echo "<script type='text/javascript'>
+        var notice = document.getElementById('notice');
+        notice.innerHTML = 'Please enter Student ID';
+        notice.style.visibility = 'visible';
+        </script>";
+  
+      }else if(empty($password)){
+        echo "<script type='text/javascript'>
+        var notice = document.getElementById('notice');
+        notice.innerHTML = 'Please enter password';
+        notice.style.visibility = 'visible';
+        </script>";
+  
+      }else{
+        $sql = "SELECT studentID,pswd FROM student WHERE studentID='$studentid' AND pswd='$password'";
+        $result = $conn->query($sql);
+  
+        if($result->num_rows > 0){
+          $_SESSION['stlogin'] = $_POST['studentid'];
+          echo "<script type = 'text/javascript'>document.location = 'dashboard.php';</script>";
+        }else{
+          echo "<script type='text/javascript'>document.getElementById('notice').style.visibility = 'visible';</script>";
+        }
+      }
+    }
+  ?>
 </body>
 </html>
