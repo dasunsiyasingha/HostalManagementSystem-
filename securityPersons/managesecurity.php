@@ -79,7 +79,7 @@
                                 </div>
                                 <div class="col-md-6 pe-0">
                                   <div class="form-group form-group-default">
-                                    <label>ID</label>
+                                    <label>Position</label>
                                     <input
                                       id="addPosition"
                                       type="text"
@@ -90,7 +90,7 @@
                                 </div>
                                 <div class="col-md-6">
                                   <div class="form-group form-group-default">
-                                    <label>NIC</label>
+                                    <label>Office</label>
                                     <input
                                       id="addOffice"
                                       type="text"
@@ -130,7 +130,7 @@
                           <tr role="row"><th class="sorting_asc" tabindex="0" aria-controls="add-row" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Name: activate to sort column descending" style="width: 249.613px;">Name</th><th class="sorting" tabindex="0" aria-controls="add-row" rowspan="1" colspan="1" aria-label="Position: activate to sort column ascending" style="width: 363.612px;">Position</th><th class="sorting" tabindex="0" aria-controls="add-row" rowspan="1" colspan="1" aria-label="Office: activate to sort column ascending" style="width: 204.275px;">Office</th><th style="width: 120.7px;" class="sorting" tabindex="0" aria-controls="add-row" rowspan="1" colspan="1" aria-label="Action: activate to sort column ascending">Action</th></tr>
                         </thead>
                         <tfoot>
-                          <tr><th rowspan="1" colspan="1">Name</th><th rowspan="1" colspan="1">Id</th><th rowspan="1" colspan="1">Nic</th><th rowspan="1" colspan="1">Age</th></tr><th rowspan="1" colspan="1">status</th><th rowspan="1" colspan="1">Action</th>
+                          <tr><th rowspan="1" colspan="1">Name</th><th rowspan="1" colspan="1">Position</th><th rowspan="1" colspan="1">Office</th><th rowspan="1" colspan="1">Action</th></tr>
                         </tfoot>
                         <tbody>
                             <tr role="row" class="odd">
@@ -139,22 +139,10 @@
                             <td>Tokyo</td>
                             <td>
                               <div class="form-button-action">
-                                <button
-                                  type="button"
-                                  data-bs-toggle="tooltip"
-                                  title=""
-                                  class="btn btn-link btn-primary btn-lg"
-                                  data-original-title="Edit Task"
-                                >
+                                <button type="button" data-bs-toggle="tooltip" title="" class="btn btn-link btn-primary btn-lg" data-original-title="Edit Task">
                                   <i class="fa fa-edit"></i>
                                 </button>
-                                <button
-                                  type="button"
-                                  data-bs-toggle="tooltip"
-                                  title=""
-                                  class="btn btn-link btn-danger"
-                                  data-original-title="Remove"
-                                >
+                                <button type="button" data-bs-toggle="tooltip" title="" class="btn btn-link btn-danger" data-original-title="Remove">
                                   <i class="fa fa-times"></i>
                                 </button>
                               </div>
