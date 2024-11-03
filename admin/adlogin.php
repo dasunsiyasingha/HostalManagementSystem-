@@ -104,7 +104,7 @@ include('../includes/config.php');
       notice.style.visibility = 'visible';
       </script>";
 
-   }if(empty($password)){
+   }else if(empty($password)){
     echo "<script type='text/javascript'>
       var notice = document.getElementById('notice');
       notice.innerHTML = 'Please enter password';
@@ -119,8 +119,8 @@ include('../includes/config.php');
      $stmt->fetch();
      $stmt->close();
     
-     $temp = password_hash('1234', PASSWORD_DEFAULT);
-     echo $temp;
+    //  $temp = password_hash('1234', PASSWORD_DEFAULT);
+    //  echo $temp;
      if ($dbpassword && password_verify($password, $dbpassword)) { 
        $_SESSION['alogin']=$_POST['username'];
        echo "<script type='text/javascript'> document.location ='dashboard.php'; </script>";
