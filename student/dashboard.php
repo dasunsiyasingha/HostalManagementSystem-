@@ -1,3 +1,13 @@
+<?php
+    session_start();
+    error_reporting(0);
+    include('../includes/config.php');
+
+    if(str($SESSION['stlogin'])==0){
+        header("location:../home/home.php");
+    }else{
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -9,3 +19,5 @@
     student DashBoard
 </body>
 </html>
+
+<?php } ?>
