@@ -131,7 +131,10 @@
 
                                 <div class="card-action text-center d-flex justify-content-between">
                                                     <button class="btn"></button>
+
+
                                                     <button type="submit" name="register" id="register" class="btn btn-success ">Submit</button>
+
                                  </div>
                     </form>
                 </div>
