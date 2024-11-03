@@ -86,7 +86,7 @@
 
                                 <div class="card-action text-center d-flex justify-content-between">
                                                     <button class="btn"></button>
-                                                    <button class="btn btn-success ">Submit</button>
+                                                    <button type="submit" class="btn btn-success ">Submit</button>
                                  </div>
                     </form>
                 </div>
