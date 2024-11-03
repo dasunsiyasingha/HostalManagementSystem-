@@ -2,9 +2,9 @@
 session_start();
 error_reporting(0);
 include('../includes/config.php');
-// if($_SESSION['alogin']!=''){
-// $_SESSION['alogin']='';
-// }
+if($_SESSION['alogin']!=''){
+$_SESSION['alogin']='';
+}
 
 ?>
 
