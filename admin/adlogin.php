@@ -2,9 +2,9 @@
 session_start();
 error_reporting(0);
 include('../includes/config.php');
-// if($_SESSION['alogin']!=''){
-// $_SESSION['alogin']='';
-// }
+if($_SESSION['alogin']!=''){
+$_SESSION['alogin']='';
+}
 
 ?>
 
@@ -104,17 +104,24 @@ include('../includes/config.php');
       notice.style.visibility = 'visible';
       </script>";
 
-   }if(empty($password)){
+   }else if(empty($password)){
     echo "<script type='text/javascript'>
       var notice = document.getElementById('notice');
       notice.innerHTML = 'Please enter password';
       notice.style.visibility = 'visible';
       </script>";
   }else{
-     $sql ="SELECT username, password FROM admin WHERE username='$username'AND password='$password'";
-     $result = $conn->query($sql);
-     
-     if ($result->num_rows > 0) {
+    $sql ="SELECT username, password FROM admin WHERE username = ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param('s', $username);
+     $stmt->execute();
+     $stmt->bind_result($dbusername, $dbpassword);
+     $stmt->fetch();
+     $stmt->close();
+    
+    //  $temp = password_hash('1234', PASSWORD_DEFAULT);
+    //  echo $temp;
+     if ($dbpassword && password_verify($password, $dbpassword)) { 
        $_SESSION['alogin']=$_POST['username'];
        echo "<script type='text/javascript'> document.location ='dashboard.php'; </script>";
      } else{

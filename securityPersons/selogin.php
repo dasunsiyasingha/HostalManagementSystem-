@@ -1,3 +1,15 @@
+<?php
+  session_start();
+  error_reporting(0);
+
+  include('../includes/config.php');
+
+  if($_SESSION['seclogin']!=''){
+    $_SESSION['seclogin']='';
+  }
+  
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -40,15 +52,19 @@
 
   <main class="d-flex align-items-center justify-content-center" style="height: 100vh;">
     <div class="bg-white p-5 rounded-3 shadow" style="min-width: 500px; width: 100%;">
-      <form>
+      <form role="form" method="post">
         <h1 class="h3 mb-3 fw-normal text-center">Security sign in</h1>
 
+        <small class="form-check-label text-danger" id="notice" style="visibility: hidden;">
+            Invalid Details.. Please Try Again!
+        </small>
+
         <div class="form-floating mb-3">
-          <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com">
-          <label for="floatingInput">Email address</label>
+          <input type="text" class="form-control" id="securityID" name="securityID" placeholder="Enter your ID">
+          <label for="floatingInput">Security ID</label>
         </div>
         <div class="form-floating">
-          <input type="password" class="form-control" id="floatingPassword" placeholder="Password">
+          <input type="password" class="form-control" id="password" name="password" placeholder="Password">
           <label for="floatingPassword">Password</label>
         </div>
 
@@ -58,13 +74,66 @@
             Remember me
           </label>
         </div>
-        <button class="btn btn-primary w-100 py-2" type="submit">Sign in</button>
+        <button class="btn btn-primary w-100 py-2" type="submit" name="login" >Sign in</button>
         
       </form>
     </div>
   </main>
 
   <script src="/docs/5.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+  <script>
+    document.getElementById("securityID").addEventListener("change", hideNotice);
+    document.getElementById("password").addEventListener("change", hideNotice);
+  
+    function hideNotice(){
+      console.log("clicked");
+      document.getElementById("notice").style.visibility = "hidden";
+    }
 
+  </script>
+  <?php 
+  if(isset($_POST['login'])){
+  $securityID = $_POST['securityID'];
+  $password = $_POST['password'];
+
+  if(empty($securityID)){
+    echo "<script type='text/javascript'>
+      var notice = document.getElementById('notice');
+      notice.innerHTML = 'Please enter security ID';
+      notice.style.visibility = 'visible';
+      </script>";
+
+   }else if(empty($password)){
+    echo "<script type='text/javascript'>
+      var notice = document.getElementById('notice');
+      notice.innerHTML = 'Please enter password';
+      notice.style.visibility = 'visible';
+      </script>";
+  }else{
+    $sql = "SELECT securityPersonID, password	FROM securityperson WHERE securityPersonID=?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param('s',$securityID);
+    $stmt->execute();
+    $stmt->bind_result($dbSecID, $dbPassword);
+    $stmt->fetch();
+    $stmt->close();
+
+    //  $temp = password_hash('1234', PASSWORD_DEFAULT);
+    //  echo $temp;
+
+    if($dbPassword && password_verify($password, $dbPassword)){
+      $_SESSION['seclogin'] = $_POST['securityID'];
+      echo "<script type='text/javascript'> document.location ='dashboard.php'; </script>";
+    } else{
+      echo "<script type='text/javascript'>document.getElementById('notice').style.visibility = 'visible';</script>";
+    }
+  }
+}
+
+?>
 </body>
 </html>
+
+
+
+

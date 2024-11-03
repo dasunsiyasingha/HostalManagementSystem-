@@ -116,10 +116,15 @@
         </script>";
   
       }else{
-        $sql = "SELECT studentID,pswd FROM student WHERE studentID='$studentid' AND pswd='$password'";
-        $result = $conn->query($sql);
+        $sql = "SELECT studentID,pswd FROM student WHERE studentID=?";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param('s',$studentid);
+        $stmt->execute();
+        $stmt->bind_result($dbuserID,$dbpassword);
+        $stmt->fetch();
+        $stmt->close();
   
-        if($result->num_rows > 0){
+        if($dbpassword && password_verify($password, $dbpassword)){
           $_SESSION['stlogin'] = $_POST['studentid'];
           echo "<script type = 'text/javascript'>document.location = 'dashboard.php';</script>";
         }else{
