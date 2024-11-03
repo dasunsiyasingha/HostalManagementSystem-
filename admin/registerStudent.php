@@ -5,6 +5,27 @@
     if(strlen($_SESSION['alogin'])==0){ 
         header('location:../home/home.php');
     }else{
+
+        if(isset($_POST['register'])){
+            
+            $stId = $_POST['stid'];
+            $stName = $_POST['stname'];
+            $stNic = $_POST['stnic'];
+            $stBatch = $_POST['stbatch'];
+            $stContact = $_POST['stcontact'];
+            $stPswd = $_POST['stpwsd'];
+            $stRoom = $_POST['stroom'];
+
+            $hashPswd = password_hash($stPswd, PASSWORD_DEFAULT);
+
+            $sql="INSERT INTO  student(studentID, studentName, nic, batch, phoneNumber, pswd, stRoomNo) VALUES('$stId','$stName','$stNic','$stBatch','$stContact','$hashPswd','$stRoom')";
+            if (mysqli_query($conn, $sql)) {
+                echo "New record created successfully";
+              } else {
+                echo "Error: " . $sql . "<br>" . mysqli_error($conn);
+              }
+
+        }
 ?>
 
 <!DOCTYPE html>
@@ -21,6 +42,7 @@
 
     <div class="container-fluid d-flex align-items-center justify-content-center" >
         <div  style="width: 50%; ">
+            <div class="alert alert-success mt-4">Place alert box</div>
             <div class="card mt-5 mb-5">
                 <div class="card-header">
                     <h3 class="card-title text-center">Student Register</h3>
@@ -34,6 +56,10 @@
                         <div class="form-group mb-3">
                             <label for="stname">Student Name</label>
                             <input type="text" class="form-control" id="stname" name="stname" placeholder="Enter student name" required>
+                        </div>
+                        <div class="form-group mb-3">
+                            <label for="stnic">NIC</label>
+                            <input type="text" class="form-control" id="stnic" name="stnic" placeholder="Enter student NIC" required>
                         </div>
                         <div class="form-group mb-3">
                             <label for="stpwsd">Student password</label>
@@ -105,7 +131,7 @@
 
                                 <div class="card-action text-center d-flex justify-content-between">
                                                     <button class="btn"></button>
-                                                    <button type="submit" name="login" id="login" class="btn btn-success ">Submit</button>
+                                                    <button type="submit" name="register" id="register" class="btn btn-success ">Submit</button>
                                  </div>
                     </form>
                 </div>
