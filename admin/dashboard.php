@@ -39,7 +39,7 @@
             </div>
             <div class="col-4 align-self-center  " style=height:50%; >
                     <div class="col-md-4 d-flex justify-content-center m-auto mt-4"style="width: 100%; height: 80%;">
-                        <div class="card card-secondary" style="width: 100%; height: 100%; cursor: pointer;" role="button" onclick="location.href='../securityPersons/managesecurity.php';">
+                        <div class="card card-secondary" style="width: 100%; height: 100%; cursor: pointer;" role="button" onclick="location.href='managesecurity.php';">
                             <div class="card-body skew-shadow position-relative">
                                 <h5 class="op-8 text-center position-absolute top-50 start-50 translate-middle fs-2">MANAGE SECURITY PERSON</h5>
                             </div>
@@ -71,3 +71,4 @@
     <!-- </div> -->
 </body>
 </html>
+
