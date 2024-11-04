@@ -6,169 +6,7 @@
         header('location:../home/home.php');
     }else{
 
-        if(isset($_POST['addroom'])){
-
-            $roomNum = $_POST['roomNo'];
-
-            $chairs = $_POST['addchair'];
-            $desks = $_POST['adddesk'];
-            $beds = $_POST['addbed'];
-            $mettresses = $_POST['addmettress'];
-            $lockers = $_POST['addlockers'];
-            $racks = $_POST['addracks'];
-
-            if($roomNum != ''){
-                $sql="INSERT INTO  room(roomNo) VALUES('$roomNum')";
-                if (mysqli_query($conn, $sql)) {
-                    echo "room New record created successfully";
-                } else {
-                    echo "room Error: " . $sql . "<br>" . mysqli_error($conn);
-                }
-            }
-
-// ADD CHAIR DETAILS
-            if(isset($chairs)){
-                if($chairs!=0 && $roomNum != ''){
-
-                    for($i=1; $i<=$chairs; $i++){
-                    //    echo $_POST['chair'."$i"]."<br/>";
-                        $chairId = $_POST['chair'."$i"];
-                        $statusChair = $_POST['statuschair'."$i"];
-                        if($statusChair != 'Damaged'){
-                            $statusChair = 'No damage';
-                        }
-
-                        $sql="INSERT INTO  chair(chairID, demageState, roomNo) VALUES('$chairId','$statusChair','$roomNum')";
-                        if (mysqli_query($conn, $sql)) {
-                            echo "chairs New record created successfully";
-                        } else {
-                            echo "Error: " . $sql . "<br>" . mysqli_error($conn);
-                        }
-                    
-                    }
-
-                }
-            }
-
-// ADD DESK DETAILS
-            if(isset($desks)){
-                if($desks!=0){
-                    for($i=1; $i<=$desks; $i++){
-                        $deskId = $_POST['desk'."$i"];
-                        $statusDesk = $_POST['statusdesk'."$i"];
-                        if($statusDesk != 'Damaged'){
-                            $statusDesk = 'No damage';
-                        }
-
-                        $sql="INSERT INTO  desk(deskID, demageState, roomNo) VALUES('$deskId','$statusDesk','$roomNum')";
-                        if (mysqli_query($conn, $sql)) {
-                            echo "desks New record created successfully";
-                        } else {
-                            echo "Error: " . $sql . "<br>" . mysqli_error($conn);
-                        }
-                    
-                    }
-
-                }
-            }
-
-
-// ADD beds DETAILS
-            if(isset($beds)){
-                if($beds!=0){
-                    for($i=1; $i<=$beds; $i++){
-                        $bedId = $_POST['bed'."$i"];
-                        $statusBed = $_POST['statusbed'."$i"];
-                        if($statusBed != 'Damaged'){
-                            $statusBed = 'No damage';
-                        }
-
-                        $sql="INSERT INTO  bed(bedID, demageState, roomNo) VALUES('$bedId','$statusBed','$roomNum')";
-                        if (mysqli_query($conn, $sql)) {
-                            echo "beds New record created successfully";
-                        } else {
-                            echo "Error: " . $sql . "<br>" . mysqli_error($conn);
-                        }
-                    
-                    }
-
-                }
-            }
-
-
-// ADD METTRESSES DETAILS
-            if(isset($mettresses)){
-                if($mettresses!=0){
-                    for($i=1; $i<=$mettresses; $i++){
-                        $mettressId = $_POST['mettress'."$i"];
-                        $statusMettress = $_POST['statusmettress'."$i"];
-                        if($statusMettress != 'Damaged'){
-                            $statusMettress = 'No damage';
-                        }
-
-                        $sql="INSERT INTO  mettress(mettressID, demageState, roomNo) VALUES('$mettressId','$statusMettress','$roomNum')";
-                        if (mysqli_query($conn, $sql)) {
-                            echo "mettress New record created successfully";
-                        } else {
-                            echo "Error: " . $sql . "<br>" . mysqli_error($conn);
-                        }
-                    
-                    }
-
-                }
-            }
-
-
-// ADD LOCKERS DETAILS
-            if(isset($lockers)){
-                if($lockers!=0){
-                    for($i=1; $i<=$lockers; $i++){
-                        $lockersId = $_POST['lockers'."$i"];
-                        $statusLockers = $_POST['statuslockers'."$i"];
-                        if($statusLockers != 'Damaged'){
-                            $statusLockers = 'No damage';
-                        }
-
-                        $sql="INSERT INTO  locker(lockerID, demageState, roomNo) VALUES('$lockersId','$statusLockers','$roomNum')";
-                        if (mysqli_query($conn, $sql)) {
-                            echo "lockers New record created successfully";
-                        } else {
-                            echo "Error: " . $sql . "<br>" . mysqli_error($conn);
-                        }
-                    
-                    }
-
-                }
-            }
-
-
-// ADD RACKS DETAILS
-            if(isset($racks)){
-                if($racks!=0){
-                    for($i=1; $i<=$racks; $i++){
-                        $rackId = $_POST['rack'."$i"];
-                        $statusRack = $_POST['statusrack'."$i"];
-                        if($statusRack != 'Damaged'){
-                            $statusRack = 'No damage';
-                        }
-
-                        $sql="INSERT INTO  rack(rackID, demageState, roomNo) VALUES('$rackId','$statusRack','$roomNum')";
-                        if (mysqli_query($conn, $sql)) {
-                            echo "New record created successfully";
-                        } else {
-                            echo "Error: " . $sql . "<br>" . mysqli_error($conn);
-                        }
-                    
-                    }
-
-                }
-            }
-        }
-
 ?>
-
-
-
 
 <!DOCTYPE html>
 <html lang="en">
@@ -201,10 +39,11 @@
 <body>
     <div class="container-fluid d-flex align-items-center justify-content-center" >
         <div  style="width: 50%; ">
-            <div class="alert alert-success mt-4">Place alert box</div>
+                <div id="liveAlertPlaceholder" class="mt-5"></div>
             <div class="card mt-5 mb-5">
                 <div class="card-header">
                     <h3 class="card-title text-center">ADD ROOMS DETAILS</h3>
+                                    <!-- <button type="button" class="btn btn-primary" id="liveAlertBtn">Show live alert</button> -->
                 </div>
                 <div class="card-body">
                     <form role="form" method="post">
@@ -703,6 +542,27 @@
                                 rackinputs.appendChild(colDiv);
                             }
                         }
+
+                        //FOR ALERT BOX
+                        const alertPlaceholder = document.getElementById('liveAlertPlaceholder')
+                        const appendAlert = (message, type) => {
+                            const wrapper = document.createElement('div')
+                            wrapper.innerHTML = [
+                                `<div class="alert alert-${type} alert-dismissible text-${type} rounded-3 " role="alert">`,
+                                `   <div>${message}</div>`,
+                                '   <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>',
+                                '</div>'
+                            ].join('')
+
+                            alertPlaceholder.append(wrapper)
+                        }
+
+                        // const alertTrigger = document.getElementById('liveAlertBtn')
+                        // if (alertTrigger) {
+                        //     alertTrigger.addEventListener('click', () => {
+                        //         appendAlert('Nice, you triggered this alert message!', 'danger')
+                        //     })
+                        // }
                         </script>
 
 
@@ -730,5 +590,235 @@
 </body>
 </html>
 
-<?php } ?>
+<?php 
+
+if(isset($_POST['addroom'])){
+
+    $roomNum = $_POST['roomNo'];
+
+    $chairs = $_POST['addchair'];
+    $desks = $_POST['adddesk'];
+    $beds = $_POST['addbed'];
+    $mettresses = $_POST['addmettress'];
+    $lockers = $_POST['addlockers'];
+    $racks = $_POST['addracks'];
+
+    if($roomNum != ''){
+        $sql="INSERT INTO  room(roomNo) VALUES('$roomNum')";
+        if (mysqli_query($conn, $sql)) {
+            // echo "room New record created successfully";
+            echo "<script>appendAlert('Nice, Room Details Add Success!', 'success');</script>";
+            // appendAlert('Nice, you triggered this alert message!', 'danger');
+        } else {
+            // echo "room Error: " . $sql . "<br>" . mysqli_error($conn);
+            echo "<script>appendAlert('Bad, Room Details Add Failed!', 'danger');</script>";
+        }
+    }
+
+// ADD CHAIR DETAILS
+    if(isset($chairs)){
+        if($chairs!=0 && $roomNum != ''){
+
+            for($i=1; $i<=$chairs; $i++){
+            //    echo $_POST['chair'."$i"]."<br/>";
+                $chairId = $_POST['chair'."$i"];
+                $statusChair = $_POST['statuschair'."$i"];
+                if($statusChair != 'Damaged'){
+                    $statusChair = 'No damage';
+                }
+
+                $sql="INSERT INTO  chair(chairID, demageState, roomNo) VALUES('$chairId','$statusChair','$roomNum')";
+                if (mysqli_query($conn, $sql)) {
+                    // echo "chairs New record created successfully";
+                    $chairAlart = 'success';
+                } else {
+                    // echo "Error: " . $sql . "<br>" . mysqli_error($conn);
+                    $chairAlart = 'fail';
+                }
+            
+            }
+
+        }
+    }
+
+// ADD DESK DETAILS
+    if(isset($desks)){
+        if($desks!=0){
+            for($i=1; $i<=$desks; $i++){
+                $deskId = $_POST['desk'."$i"];
+                $statusDesk = $_POST['statusdesk'."$i"];
+                if($statusDesk != 'Damaged'){
+                    $statusDesk = 'No damage';
+                }
+
+                $sql="INSERT INTO  desk(deskID, demageState, roomNo) VALUES('$deskId','$statusDesk','$roomNum')";
+                if (mysqli_query($conn, $sql)) {
+                    // echo "desks New record created successfully";
+                    $deskAlart = 'success';
+                } else {
+                    // echo "Error: " . $sql . "<br>" . mysqli_error($conn);
+                    $deskAlart = 'fail';
+                }
+            
+            }
+
+        }
+    }
+
+
+// ADD beds DETAILS
+    if(isset($beds)){
+        if($beds!=0){
+            for($i=1; $i<=$beds; $i++){
+                $bedId = $_POST['bed'."$i"];
+                $statusBed = $_POST['statusbed'."$i"];
+                if($statusBed != 'Damaged'){
+                    $statusBed = 'No damage';
+                }
+
+                $sql="INSERT INTO  bed(bedID, demageState, roomNo) VALUES('$bedId','$statusBed','$roomNum')";
+                if (mysqli_query($conn, $sql)) {
+                    // echo "beds New record created successfully";
+                    $bedAlart = 'success';
+                } else {
+                    // echo "Error: " . $sql . "<br>" . mysqli_error($conn);
+                    $bedAlart = 'fail';
+                }
+            
+            }
+
+        }
+    }
+
+
+// ADD METTRESSES DETAILS
+    if(isset($mettresses)){
+        if($mettresses!=0){
+            for($i=1; $i<=$mettresses; $i++){
+                $mettressId = $_POST['mettress'."$i"];
+                $statusMettress = $_POST['statusmettress'."$i"];
+                if($statusMettress != 'Damaged'){
+                    $statusMettress = 'No damage';
+                }
+
+                $sql="INSERT INTO  mettress(mettressID, demageState, roomNo) VALUES('$mettressId','$statusMettress','$roomNum')";
+                if (mysqli_query($conn, $sql)) {
+                    // echo "mettress New record created successfully";
+                    $mettressAlart = 'success';
+                } else {
+                    // echo "Error: " . $sql . "<br>" . mysqli_error($conn);
+                    $mettressAlart = 'fail';
+                }
+            
+            }
+
+        }
+    }
+
+
+// ADD LOCKERS DETAILS
+    if(isset($lockers)){
+        if($lockers!=0){
+            for($i=1; $i<=$lockers; $i++){
+                $lockersId = $_POST['lockers'."$i"];
+                $statusLockers = $_POST['statuslockers'."$i"];
+                if($statusLockers != 'Damaged'){
+                    $statusLockers = 'No damage';
+                }
+
+                $sql="INSERT INTO  locker(lockerID, demageState, roomNo) VALUES('$lockersId','$statusLockers','$roomNum')";
+                if (mysqli_query($conn, $sql)) {
+                    // echo "lockers New record created successfully";
+                    $lockerAlart = 'success';
+                } else {
+                    // echo "Error: " . $sql . "<br>" . mysqli_error($conn);
+                    $lockerAlart = 'fail';
+                }
+            
+            }
+
+        }
+    }
+
+
+// ADD RACKS DETAILS
+    if(isset($racks)){
+        if($racks!=0){
+            for($i=1; $i<=$racks; $i++){
+                $rackId = $_POST['rack'."$i"];
+                $statusRack = $_POST['statusrack'."$i"];
+                if($statusRack != 'Damaged'){
+                    $statusRack = 'No damage';
+                }
+
+                $sql="INSERT INTO  rack(rackID, demageState, roomNo) VALUES('$rackId','$statusRack','$roomNum')";
+                if (mysqli_query($conn, $sql)) {
+                    // echo "New record created successfully";
+                    $rackAlart = 'success';
+                } else {
+                    // echo "Error: " . $sql . "<br>" . mysqli_error($conn);
+                    $rackAlart = 'fail';
+
+                }
+            
+            }
+
+        }
+    }
+}
+
+
+if($chairAlart && $deskAlart && $bedAlart && $mettressAlart && $lockerAlart && $rackAlart){
+    
+    if(($chairAlart == 'success') && ($deskAlart=='success' ) && ($bedAlart=='success') && ($mettressAlart == 'success') && ($lockerAlart == 'success') && ($rackAlart == 'success')){
+        $allDetailAlart = 'ok';
+        echo "<script>appendAlert('Nice, All Room Components Details Add Success!', 'success');</script>";
+    }else if(($chairAlart == 'fail') && ($deskAlart=='fail' ) && ($bedAlart=='fail') && ($mettressAlart == 'fail') && ($lockerAlart == 'fail') && ($rackAlart == 'fail')){
+        $allDetailAlart = 'ok';
+        echo "<script>appendAlert('Bad, All Room Components Add Faild! Try Again', 'danger');</script>";
+    }else{
+        $allDetailAlart = 'ok';
+        echo "<script>appendAlert('Warning!, chair details add " .$chairAlart." ! <br> desk details add " .$deskAlart." ! <br> Bed details add " .$bedAlart. " ! <br> Mettress details add " .$mettressAlart. " ! <br> Locker details add " .$lockerAlart. " ! <br> Rack details add " .$rackAlart. " !', 'warning');</script>";
+    }
+}
+
+if($allDetailAlart != 'ok'){
+   if($chairAlart == 'success'){
+    echo "<script>appendAlert('Nice, Chair Details Add Success !', 'success');</script>";
+   } else if($chairAlart == 'fail'){
+    echo "<script>appendAlert('Bad, Chair Details Add failed !', 'danger');</script>";
+   }
+
+   if($deskAlart == 'success'){
+    echo "<script>appendAlert('Nice, Desk Details Add Success !', 'success');</script>";
+   } else if($deskAlart == 'fail'){
+    echo "<script>appendAlert('Bad, Desk Details Add failed !', 'danger');</script>";
+   }
+
+   if($bedAlart == 'success'){
+    echo "<script>appendAlert('Nice, Bed Details Add Success !', 'success');</script>";
+   } else if($bedAlart == 'fail'){
+    echo "<script>appendAlert('Bad, Bed Details Add failed !', 'danger');</script>";
+   }
+
+   if($mettressAlart == 'success'){
+    echo "<script>appendAlert('Nice, Mettress Details Add Success !', 'success');</script>";
+   } else if($mettressAlart == 'fail'){
+    echo "<script>appendAlert('Bad, Mettress Details Add failed !', 'danger');</script>";
+   }
+
+   if($lockerAlart == 'success'){
+    echo "<script>appendAlert('Nice, Locker Details Add Success !', 'success');</script>";
+   } else if($lockerAlart == 'fail'){
+    echo "<script>appendAlert('Bad, Locker Details Add failed !', 'danger');</script>";
+   }
+
+   if($rackAlart == 'success'){
+    echo "<script>appendAlert('Nice, Racks Details Add Success !', 'success');</script>";
+   } else if($rackAlart == 'fail'){
+    echo "<script>appendAlert('Bad, Racks Details Add failed !', 'danger');</script>";
+   }
+}
+
+} ?>
 

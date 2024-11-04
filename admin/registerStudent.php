@@ -5,27 +5,6 @@
     if(strlen($_SESSION['alogin'])==0){ 
         header('location:../home/home.php');
     }else{
-
-        if(isset($_POST['register'])){
-            
-            $stId = $_POST['stid'];
-            $stName = $_POST['stname'];
-            $stNic = $_POST['stnic'];
-            $stBatch = $_POST['stbatch'];
-            $stContact = $_POST['stcontact'];
-            $stPswd = $_POST['stpwsd'];
-            $stRoom = $_POST['stroom'];
-
-            $hashPswd = password_hash($stPswd, PASSWORD_DEFAULT);
-
-            $sql="INSERT INTO  student(studentID, studentName, nic, batch, phoneNumber, pswd, stRoomNo) VALUES('$stId','$stName','$stNic','$stBatch','$stContact','$hashPswd','$stRoom')";
-            if (mysqli_query($conn, $sql)) {
-                echo "New record created successfully";
-              } else {
-                echo "Error: " . $sql . "<br>" . mysqli_error($conn);
-              }
-
-        }
 ?>
 
 <!DOCTYPE html>
@@ -42,7 +21,7 @@
 
     <div class="container-fluid d-flex align-items-center justify-content-center" >
         <div  style="width: 50%; ">
-            <div class="alert alert-success mt-4">Place alert box</div>
+            <div id="liveAlertPlaceholder" class="mt-4"></div>
             <div class="card mt-5 mb-5">
                 <div class="card-header">
                     <h3 class="card-title text-center">Student Register</h3>
@@ -117,13 +96,34 @@
                                 </div>
 
                                 <script>
-                                function setBatch(value) {
-                                    document.getElementById('stbatch').value = value;
-                                }
+                                    function setBatch(value) {
+                                        document.getElementById('stbatch').value = value;
+                                    }
 
-                                function stroom(value) {
-                                    document.getElementById('stroom').value = value;
-                                }
+                                    function stroom(value) {
+                                        document.getElementById('stroom').value = value;
+                                    }
+
+                                    //FOR ALERT BOX
+                                    const alertPlaceholder = document.getElementById('liveAlertPlaceholder')
+                                    const appendAlert = (message, type) => {
+                                        const wrapper = document.createElement('div')
+                                        wrapper.innerHTML = [
+                                            `<div class="alert alert-${type} alert-dismissible text-${type} rounded-3 " role="alert">`,
+                                            `   <div>${message}</div>`,
+                                            '   <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>',
+                                            '</div>'
+                                        ].join('')
+
+                                        alertPlaceholder.append(wrapper)
+                                    }
+
+                                    // const alertTrigger = document.getElementById('liveAlertBtn')
+                                    // if (alertTrigger) {
+                                    //     alertTrigger.addEventListener('click', () => {
+                                    //         appendAlert('Nice, you triggered this alert message!', 'danger')
+                                    //     })
+                                    // }
                                 </script>
 
 
@@ -150,5 +150,31 @@
     <?php include '../libraries/script.php';?>
     
 </body>
-</html> <?php }?>
+</html> 
+<?php
+    if(isset($_POST['register'])){
+        
+        $stId = $_POST['stid'];
+        $stName = $_POST['stname'];
+        $stNic = $_POST['stnic'];
+        $stBatch = $_POST['stbatch'];
+        $stContact = $_POST['stcontact'];
+        $stPswd = $_POST['stpwsd'];
+        $stRoom = $_POST['stroom'];
+
+        $hashPswd = password_hash($stPswd, PASSWORD_DEFAULT);
+
+        $sql="INSERT INTO  student(studentID, studentName, nic, batch, phoneNumber, pswd, stRoomNo) VALUES('$stId','$stName','$stNic','$stBatch','$stContact','$hashPswd','$stRoom')";
+        if (mysqli_query($conn, $sql)) {
+            // echo "New record created successfully";
+            echo "<script>appendAlert('Nice, Student Details Add Success !', 'success');</script>";
+        } else {
+            // echo "Error: " . $sql . "<br>" . mysqli_error($conn);
+            echo "<script>appendAlert('Error, Student Details Add Failed !', 'danger');</script>";
+        }
+
+    }
+}
+
+?>
 
