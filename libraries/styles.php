@@ -5,4 +5,5 @@
     <link rel="stylesheet" href="../assets/css/plugins.min.css" />
     <link rel="stylesheet" href="../assets/css/kaiadmin.min.css" />
     <link rel="stylesheet" href="../assets/css/demo.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 
