@@ -1,3 +1,12 @@
+<?php
+    session_start();
+    error_reporting(0);
+    include('../includes/config.php');
+    if(strlen($_SESSION['alogin'])==0){ 
+        header('location:../home/home.php');
+    }else{
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -36,28 +45,42 @@
                         </thead>
                         <tfoot>
                           <tr>
-                            <th>Date</th>
+                            <th>timestamps</th>
                             <th>Security ID</th>
-                            <th>Name</th>
+                            <th>Note</th> 
+                            <th>status</th>
                             <th>Start Time</th>
                             <th>Leave Time</th>
                           </tr>
                         </tfoot>
                         <tbody>
                           <tr>
-                            <td>2024/10/03</td>
-                            <td>Sec/451/38</td>
-                            <td>Sugathapala</td>
-                            <td>8.43 A.M.</td>
-                            <td>10.08 P.M.</td>
+                            <th>timestamps</th>
+                            <th>Security ID</th>
+                            <th>Note</th> 
+                            <th>status</th>
+                            <th>Start Time</th>
+                            <th>Leave Time</th>
                           </tr>
-                          <tr>
-                            <td>2024/10/03</td>
-                            <td>Sec/341/62</td>
-                            <td>Jayapala</td>
-                            <td>9.20 A.M.</td>
-                            <td>7.00 P.M.</td>
-                          </tr>
+
+                          <?php
+                            $sql = "SELECT * FROM `securitylogs` WHERE 1";
+                            if ($result = $conn->query($sql)) {
+                              while ($row = $result->fetch_assoc()) {
+                                echo "<tr>
+                                      <td>".$row['timestamps']."</td>
+                                      <td>".$row['sid']."</td>
+                                      <td>".$row['note']."</td>
+                                      <td>".$row['status']."</td>
+                                      <td>".$row['start_time']."</td>
+                                      <td>".$row['end_time']."</td>
+                                      </tr>";
+                              }
+
+                            }else{
+
+                            }
+                          ?>
                           
                         </tbody>
                       </table>
@@ -141,3 +164,5 @@
     </script>
 </body>
 </html>
+
+<?php } ?>

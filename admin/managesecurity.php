@@ -235,34 +235,6 @@
                           </tr>
                         </tfoot>
                         <tbody>
-                          <tr role="row" class="odd">
-                            <td class="sorting_1">Airi Satou</td>
-                            <td>Accountant</td>
-                            <td>password1234</td>
-
-                            <td>
-                              <div class="form-check form-switch">
-                                <input class="form-check-input status-toggle" type="checkbox" role="switch" id="st_status">
-                                <label class="form-check-label" for="st_status" id="statusLabel"></label>
-                              </div>
-                              
-                            </td>
-
-                            <td>
-                              <div class="form-button-action">
-                                <button type="button" title=""  data-bs-toggle="modal" data-bs-target="#updateSecurity" 
-                                  class="btn btn-link btn-primary btn-lg" data-original-title="Edit Task">
-                                  <i class="fa fa-edit"></i>
-                                </button>
-
-                              
-                                <button type="button" data-bs-toggle="tooltip" title="" class="btn btn-link btn-danger"
-                                  data-original-title="Remove">
-                                  <i class="fa fa-times"></i>
-                                </button>
-                              </div>
-                            </td>
-                          </tr>
 
                           <?php 
                           $sql = "SELECT securityperson.sid AS s_id, securityperson.name AS s_name, securityperson.password AS s_pswd, securitylogs.status AS s_status FROM securityperson LEFT JOIN securitylogs ON securityperson.sid = securitylogs.sid AND securitylogs.timestamps = (SELECT MAX(timestamps) FROM securitylogs AS sl WHERE sl.sid = securityperson.sid);";
@@ -432,7 +404,7 @@
                             <form role="form" method="post">
                             <input id="deleteid" name="delete_sid" type="text" class="form-control" value="'.$row['s_id'].'" style="visibility:hidden" />
                               <div class="modal-footer border-0">
-                                <button type="submit" id="update" name="update" class="btn btn-primary">
+                                <button type="submit" id="delete" name="delete" class="btn btn-primary">
                                   DELETE
                                 </button>
                                 <button type="button" class="btn btn-danger" data-dismiss="modal">
@@ -669,6 +641,17 @@ if(isset($_POST['update'])){
     echo "securityperson Error: " . $sql . "<br>" . mysqli_error($conn);
   }
 
+}
+
+if(isset($_POST['delete'])){
+  $delete_sid = $_POST['delete_sid'];
+
+  $sql = "DELETE FROM securityperson WHERE sid = '$delete_sid'";
+  if (mysqli_query($conn, $sql)) {
+    echo 'securityperson ID is DELETED..';
+  }else{
+    echo "securityperson Error: " . $sql . "<br>" . mysqli_error($conn);
+  }
 }
 
 } ?>
