@@ -15,7 +15,7 @@
         $row = mysqli_fetch_assoc($result);
         
         if($row['site_access']=='0'){
-            header('siteBlock.php');
+            header('location:siteBlock.php');
         }else{
 
             $sql = "SELECT mark_access FROM securityperson WHERE sid = '$secPid'";
@@ -52,7 +52,7 @@
         <div class="row">
           <div class="col-6">
             <button type="button" class="mt-3 ms-5"
-            style="width:80%; height:40px; background-color:#275d8b;border: none; color: white; " data-bs-toggle="modal" onclick="location.href='access_security.php';"
+            style="width:80%; height:40px; background-color:#275d8b;border: none; color: white; " data-bs-toggle="modal" onclick="location.href='viewStudentLogs.php';"
             data-bs-target="#addsecurityperson">
             Students Logs
           </button>
@@ -116,7 +116,7 @@
                               // echo '<td>'.$row['s_status'].'</td>';
 
                               $color = !empty($row['stu_status']) ? 'success' : 'danger';
-                              $status = !empty($row['stu_status']) ? 'ON' : 'OFF';
+                              $status = !empty($row['stu_status']) ? 'IN Hostal' : 'OUT Hostal';
                               $checked = !empty($row['stu_status']) ? 'checked' : '';
                               $display = !empty($row['stu_status']) ? '' : 'none';
 
@@ -148,13 +148,13 @@
                                         <div class="col-sm-12 ">
                                         <input type="text" name="id" id="id" value="'.$row['stu_id'].'" style="visibility:hidden">
                                           <div class="form-check form-switch">
-                                          <input class="form-check-input" type="checkbox" role="switch" id="editstatusbox'.$row['stu_id'].'" name="statuscheck" '.$checked.'>
+                                          <input class="form-check-input" type="checkbox" role="switch" id="editstatusbox'.$row['stu_id'].'"  value="1" name="statuscheck" '.$checked.'>
                                           <label class="form-check-label" for="statuscheck">Status '.$row['stu_id'].'</label>
                                           </div>
 
                                           <div class="form-check form-text" style="display:'.$display.'">
                                           <label class="form-label" for="note">Note '.$row['stu_id'].'</label>
-                                          <input class="form-input" type="text" id="note'.$row['stu_id'].'" name="note" value="1" '.$checked.'>
+                                          <input class="form-input" type="text" id="note'.$row['stu_id'].'" name="note"  '.$checked.'>
                                           </div>
                                         </div>
 
@@ -346,7 +346,7 @@
                 echo "".$row['studentID'] ." Student is in the Hostal";
               }else {
                 try{
-                  $sql = "INSERT INTO studentlogs(studentID, in_time, out_time, inMarkby) VALUES('$id', NOW(), '' '$secPid')";
+                  $sql = "INSERT INTO studentlogs(studentID, in_time, out_time, inMarkedby) VALUES('$id', NOW(), '', '$secPid')";
                   if (!mysqli_query($conn, $sql)) {
                       // echo "New securitylogs record created successfully";
                       throw new Exception("Error inserting into securitylogs: " . mysqli_error($conn));
@@ -381,7 +381,7 @@
       
             try{
               
-              $sql="UPDATE studentlogs SET note='$note', out_time= NOW(), outMarkby='$secPid' WHERE studentID='$id'  AND (out_time IS NULL OR out_time = '') ORDER BY timestamps DESC LIMIT 1";
+              $sql="UPDATE studentlogs SET note='$note', out_time= NOW(), outMarkedby='$secPid' WHERE studentID='$id'  AND (out_time IS NULL OR out_time = '') ORDER BY timestamps DESC LIMIT 1";
               if (!mysqli_query($conn, $sql)) {
                 // echo "securitylogs record UPDATE successfully";
                 throw new Exception("Error updating into securitylogs: " . mysqli_error($conn));
@@ -401,7 +401,7 @@
       
             }catch(Exception $e){
               mysqli_rollback($conn);
-               echo "Transaction failed: " . $e->getMessage();
+               echo "Transactionoooo failed: " . $e->getMessage();
             }
             
           }

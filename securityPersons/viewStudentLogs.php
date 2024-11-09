@@ -2,7 +2,7 @@
     session_start();
     error_reporting(0);
     include('../includes/config.php');
-    if(strlen($_SESSION['alogin'])==0){ 
+    if(strlen($_SESSION['seclogin'])==0){ 
         header('location:../home/home.php');
     }else{
 ?>
@@ -35,7 +35,7 @@
                         class="display table table-striped table-hover"
                       >
                         <thead>
-                          <tr>
+                        <tr>
                             <th>timestamps</th>
                             <th>studentID</th>
                             <th>in time</th>
