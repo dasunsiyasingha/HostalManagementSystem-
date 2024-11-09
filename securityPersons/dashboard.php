@@ -7,8 +7,9 @@
     if(strlen($_SESSION['seclogin'])==0){ 
         header('location:../home/home.php');
     }else{
-        $sid = $_SESSION['seclogin'];
-        $sql = "SELECT site_access FROM securityperson WHERE sid = '$sid'";
+
+        $secPid = $_SESSION['seclogin'];
+        $sql = "SELECT site_access FROM securityperson WHERE sid = '$secPid'";
 
         $result = mysqli_query($conn, $sql);
         $row = mysqli_fetch_assoc($result);
@@ -16,7 +17,19 @@
         if($row['site_access']=='0'){
             header('siteBlock.php');
         }else{
-        
+
+            $sql = "SELECT mark_access FROM securityperson WHERE sid = '$secPid'";
+
+            $result = mysqli_query($conn, $sql);
+            $row = mysqli_fetch_assoc($result);
+
+            if($row['mark_access']=='0'){
+                //if click change status of student when display request permission alert dialog box
+                $statusChgeModel = 'denied';
+            }else{
+                //if click change status of student when display edit status alert dialog box
+                $statusChgeModel = 'editstatus';
+            }
 
 ?>
 
@@ -34,163 +47,29 @@
 <div class="row  m-auto " style="width:100vw; height:100vh; background-color:#f5f5f5">
     <div class="row  m-auto " style="width:70vw; height:100vh; background-color:#ffffff">
       <div>
-        <h3 class=" card-title text-center mt-3" style="color:#507297">Security Management</h3>
+        <h3 class=" card-title text-center mt-3" style="color:#507297">Security Dashboard</h3>
         <hr style="border: 1px solid #507297; width: 100%; mt-3;">
         <div class="row">
           <div class="col-6">
             <button type="button" class="mt-3 ms-5"
-            style="width:80%; height:40px; background-color:#275d8b;border: none; color: white; " data-bs-toggle="modal"
+            style="width:80%; height:40px; background-color:#275d8b;border: none; color: white; " data-bs-toggle="modal" onclick="location.href='access_security.php';"
             data-bs-target="#addsecurityperson">
-            <i class="bi bi-plus pt-4 pb-5 "></i> Add new security person
+            Students Logs
           </button>
           </div>
           <div class="col-6">
-            
-          <button type="button" class="mt-3 ms-5"
-            style="width:80%; height:40px; background-color:#275d8b;border: none; color: white; " onclick="location.href='access_security.php';">
-            <i ></i> Access security
-          </button> 
           </div>
        
 
  
           <div class="row m-auto">
-            <!-- <div class="card-body"> -->
 
             <div class="col-md-12">
               <div class="card">
                 <div class="card-header">
                   <div class="d-flex align-items-center">
-                    <!-- <button -->
-                    <!-- class="btn btn-primary btn-round ms-auto" -->
-                    <!-- data-bs-toggle="modal" -->
-                    <!-- data-bs-target="#addsecurityperson" -->
-
-                    <!-- <i class="fa fa-plus"></i> -->
-                    <!-- Add Row -->
-                    <!-- </button> -->
                   </div>
                 </div>
-                <div class="card-body">
-                  <!-- ADD SECURITY PERSON Modal -->
-                  <div class="modal fade" id="addsecurityperson" tabindex="-1" role="dialog" aria-hidden="true">
-                    <div class="modal-dialog" role="document">
-                      <div class="modal-content">
-                        <div class="modal-header border-0">
-                          <h5 class="modal-title">
-                            <span class="fw-mediumbold"> Add</span>
-                            <span class="fw-light"> New Security </span>
-                          </h5>
-                          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                          </button>
-                        </div>
-                        <div class="modal-body">
-                          <p class="small">
-                            Create a new row using this form, make sure you
-                            fill them all
-                          </p>
-                          <form role="form" method="post">
-                            <div class="row">
-                              <div class="col-sm-12 ">
-                                <div class="form-group form-group-default">
-                                  <label>Security ID</label>
-                                  <input id="addid" name="id" type="text" class="form-control" placeholder="Enter Security Id" required />
-                                </div>
-                              </div>
-                              <div class="col-sm-12">
-                                <div class="form-group form-group-default">
-                                  <label>Name</label>
-                                  <input id="addname" name="name" type="text" class="form-control" placeholder="Enter name" />
-                                </div>
-                              </div><div class="col-sm-12">
-                                <div class="form-group form-group-default">
-                                  <label>Password</label>
-                                  <input id="addpassword" name="password" type="password" class="form-control" required />
-                                </div>
-                              </div>
-
-                              <div class="col-md-6">
-                                <!-- <div class="form-group form-group-default">
-                                  <label>Status</label>
-                                  <input id="addstatus" type="text" class="form-control" placeholder="fill age" />
-                                </div> -->
-                              </div>
-
-                            </div>
-                            <!-- </form> -->
-                            <div class="modal-footer border-0">
-                              <button type="submit" id="addRowButton" name="register" class="btn btn-primary">
-                                Add
-                              </button>
-                              <button type="button" class="btn btn-danger" data-dismiss="modal">
-                                Close
-                              </button>
-                            </div>
-                          </form>
-                        </div>
-                        
-                      </div>
-                    </div>
-                  </div>
-
-
-
-
-                  <!-- ooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo -->
-                    <!--  EDIT STATUS Modal -->
-                  
-
-                  <!-- 00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000 -->
-
-
-                   <!-- ooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo -->
-                    <!--  DELETE Modal -->
-                    <div class="modal fade" id="deletemodal" tabindex="-1" role="dialog" aria-hidden="true">
-                    <div class="modal-dialog" role="document">
-                      <div class="modal-content">
-                        <div class="modal-header border-0">
-                          <h5 class="modal-title">
-                            <span class="fw-mediumbold"> Change</span>
-                            <span class="fw-light"> Status </span>
-                          </h5>
-                          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                          </button>
-                        </div>
-                        <div class="modal-body">
-                          <p class="small">
-                            Create a new row using this form, make sure you
-                            fill them all
-                          </p>
-                          <form role="form" method="post">
-                            <div class="row">
-                              <div class="col-sm-12 ">
-                                <div class="form-check form-switch">
-                                <input class="form-check-input" type="checkbox" role="switch" id="editstatusbox" name="statuscheck">
-                                <label class="form-check-label" for="flexSwitchCheckDefault">Status</label>
-
-                                </div>
-                              </div>
-
-                            </div>
-                            <!-- </form> -->
-                            <div class="modal-footer border-0">
-                              <button type="submit" id="deletebutton" name="delete" class="btn btn-primary">
-                                Change
-                              </button>
-                              <button type="button" class="btn btn-danger" data-dismiss="modal">
-                                Close
-                              </button>
-                            </div>
-                          </form>
-                        </div>
-                        
-                      </div>
-                    </div>
-                  </div>
-
-                  <!-- 00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000 -->
 
                   <table class="mt-5">
 
@@ -208,9 +87,7 @@
                             <th class="sorting_asc" tabindex="0" aria-controls="add-row" rowspan="1" colspan="1"
                               aria-sort="ascending" aria-label="Name: activate to sort column descending"
                               style="width: 363.613px;">Batch</th>
-                            <th class="sorting_asc" tabindex="0" aria-controls="add-row" rowspan="1" colspan="1"
-                              aria-sort="ascending" aria-label="Name: activate to sort column descending"
-                              style="width: 363.613px;">Note</th>
+
                             <th style="width: 120.7px;" class="sorting" tabindex="0" aria-controls="add-row" rowspan="1"
                               colspan="1" aria-label="Action: activate to sort column ascending">Status</th>
 
@@ -218,8 +95,9 @@
                         </thead>
                         <tfoot>
                           <tr>
-                            <th rowspan="1" colspan="1">Security Id</th>
+                            <th rowspan="1" colspan="1">Student Id</th>
                             <th rowspan="1" colspan="1">Name</th>
+                            <th rowspan="1" colspan="1">Batch</th>
                             <!-- <th rowspan="1" colspan="1">Password</th> -->
                             <th rowspan="1" colspan="1">Status</th>
                           </tr>
@@ -227,27 +105,28 @@
                         <tbody>
 
                           <?php 
-                          $sql = "SELECT securityperson.sid AS s_id, securityperson.name AS s_name, securityperson.status AS s_status FROM securityperson LEFT JOIN securitylogs ON securityperson.sid = securitylogs.sid AND securitylogs.timestamps = (SELECT MAX(timestamps) FROM securitylogs AS sl WHERE sl.sid = securityperson.sid);";
+                          $sql = "SELECT student.studentID AS stu_id, student.studentName AS stu_name, student.batch AS stu_batch, student.status AS stu_status FROM student;";
                           if ($result = $conn->query($sql)) {
                             while($row = $result->fetch_assoc()){
                               echo '<tr role="row" class="odd">';
-                              echo '<td>'.$row['s_id'].'</td>';
-                              echo '<td>'.$row['s_name'].'</td>';
+                              echo '<td>'.$row['stu_id'].'</td>';
+                              echo '<td>'.$row['stu_name'].'</td>';
+                              echo '<td>'.$row['stu_batch'].'</td>';
                               // echo '<td>'.$row['s_pswd'].'</td>';
                               // echo '<td>'.$row['s_status'].'</td>';
 
-                              $color = !empty($row['s_status']) ? 'success' : 'danger';
-                              $status = !empty($row['s_status']) ? 'ON' : 'OFF';
-                              $checked = !empty($row['s_status']) ? 'checked' : '';
-                              $display = !empty($row['s_status']) ? '' : 'none';
+                              $color = !empty($row['stu_status']) ? 'success' : 'danger';
+                              $status = !empty($row['stu_status']) ? 'ON' : 'OFF';
+                              $checked = !empty($row['stu_status']) ? 'checked' : '';
+                              $display = !empty($row['stu_status']) ? '' : 'none';
 
                               echo '<td>
                               <div class="form-check form-switch">
-                                <span class="badge rounded-2 p-2 text-bg-'.$color.'" role="button" id="s_status'.$row['s_id'].'" style="cursor: pointer; width:65px;" data-bs-toggle="modal" data-bs-target="#editstatus'.$row['s_id'].'" >'.$status.' </span>
+                                <span class="badge rounded-2 p-2 text-bg-'.$color.'" role="button" id="s_status'.$row['stu_id'].'" style="cursor: pointer; width:65px;" data-bs-toggle="modal" data-bs-target="#'.$statusChgeModel.''.$row['stu_id'].'" >'.$status.' </span>
                               
                             </td>
                             
-                            <div class="modal fade" id="editstatus'.$row['s_id'].'" tabindex="-1" role="dialog" aria-hidden="true">
+                            <div class="modal fade" id="editstatus'.$row['stu_id'].'" tabindex="-1" role="dialog" aria-hidden="true">
                               <div class="modal-dialog" role="document">
                                 <div class="modal-content">
                                   <div class="modal-header border-0">
@@ -267,23 +146,58 @@
                                     <form role="form" method="post">
                                       <div class="row">
                                         <div class="col-sm-12 ">
-                                        <input type="text" name="id" id="id" value="'.$row['s_id'].'" style="visibility:hidden">
+                                        <input type="text" name="id" id="id" value="'.$row['stu_id'].'" style="visibility:hidden">
                                           <div class="form-check form-switch">
-                                          <input class="form-check-input" type="checkbox" role="switch" id="editstatusbox'.$row['s_id'].'" name="statuscheck" '.$checked.'>
-                                          <label class="form-check-label" for="statuscheck">Status '.$row['s_id'].'</label>
+                                          <input class="form-check-input" type="checkbox" role="switch" id="editstatusbox'.$row['stu_id'].'" name="statuscheck" '.$checked.'>
+                                          <label class="form-check-label" for="statuscheck">Status '.$row['stu_id'].'</label>
                                           </div>
 
                                           <div class="form-check form-text" style="display:'.$display.'">
-                                          <label class="form-label" for="note">Note '.$row['s_id'].'</label>
-                                          <input class="form-input" type="text" id="note'.$row['s_id'].'" name="note" value="1" '.$checked.'>
+                                          <label class="form-label" for="note">Note '.$row['stu_id'].'</label>
+                                          <input class="form-input" type="text" id="note'.$row['stu_id'].'" name="note" value="1" '.$checked.'>
                                           </div>
                                         </div>
 
                                       </div>
                                       <!-- </form> -->
                                       <div class="modal-footer border-0">
-                                        <button type="submit" id="statuschange'.$row['s_id'].'" name="statuschange" class="btn btn-primary">
+                                        <button type="submit" id="statuschange'.$row['stu_id'].'" name="statuschange" class="btn btn-primary">
                                           Change
+                                        </button>
+                                        <button type="button" class="btn btn-danger" data-dismiss="modal">
+                                          Close
+                                        </button>
+                                      </div>
+                                    </form>
+                                  </div>
+                                  
+                                </div>
+                              </div>
+                            </div>
+
+<!-- request Mark permission to change student status -->
+
+                            <div class="modal fade" id="denied'.$row['stu_id'].'" tabindex="-1" role="dialog" aria-hidden="true">
+                              <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                  <div class="modal-header border-0">
+                                    <h5 class="modal-title">
+                                      <span class="fw-mediumbold"> Change</span>
+                                      <span class="fw-light"> Status </span>
+                                    </h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                      <span aria-hidden="true">&times;</span>
+                                    </button>
+                                  </div>
+                                  <div class="modal-body">
+                                    <p class="small">
+                                      Sorry... Do not allowed permission to change status please request from admin
+                                    </p>
+                                    <form role="form" method="post">
+                                      
+                                      <div class="modal-footer border-0">
+                                        <button type="submit" id="ok'.$row['stu_id'].'" name="ok" class="btn btn-primary">
+                                          OK
                                         </button>
                                         <button type="button" class="btn btn-danger" data-dismiss="modal">
                                           Close
@@ -300,9 +214,6 @@
                           
                           }
 
-
-
-                          
                           ?>
                           
                         </tbody>
@@ -412,4 +323,90 @@
 
 </body>
 </html>
-<?php }} ?>
+<?php
+    if(isset($_POST['statuschange'])){
+
+        $status = $_POST['statuscheck'];
+        $id = $_POST['id'];
+        $note = $_POST['note'];
+        
+        $statusval = $status ? '1' : '0';
+      
+        if($id == '' ){
+          echo "Have a some Errors. Please Try Again";
+        }else{
+          if($statusval){
+      
+            //CHECK IF END TIME HAS NULL BEFORE INSERT NEW ROW
+            $sql="SELECT in_time FROM studentlogs WHERE studentID = '$id' AND (out_time IS NULL OR out_time = '') ORDER BY timestamps DESC LIMIT 1";
+            if ($result = $conn->query($sql)) {
+      
+              $row = $result->fetch_assoc();
+              if($row && !empty($row['in_time'])){ // CHECK START TIME HAVE A VALUE
+                echo "".$row['studentID'] ." Student is in the Hostal";
+              }else {
+                try{
+                  $sql = "INSERT INTO studentlogs(studentID, in_time, out_time, inMarkby) VALUES('$id', NOW(), '' '$secPid')";
+                  if (!mysqli_query($conn, $sql)) {
+                      // echo "New securitylogs record created successfully";
+                      throw new Exception("Error inserting into securitylogs: " . mysqli_error($conn));
+        
+                  }
+                   // Get the last inserted ID to use as the foreign key in `securityperson`
+                  $user_id = mysqli_insert_id($conn);
+      
+                  //  Update an existing row in `securityperson` table using the `user_id
+                  $sql2 = "UPDATE student SET status='$statusval' WHERE studentID='$id';";
+                  if (!mysqli_query($conn, $sql2)) {
+                    throw new Exception("Error updating user_profiles: " . mysqli_error($conn));
+                  }
+      
+                  mysqli_commit($conn);
+                  echo "<script>history.back();</script>";
+                  exit();
+      
+      
+      
+                }catch(Exception $e){
+                  mysqli_rollback($conn);
+                  echo "Transaction failed: " . $e->getMessage();
+                }
+                
+              }
+            }
+            $result->free();
+      
+      
+          }else{
+      
+            try{
+              
+              $sql="UPDATE studentlogs SET note='$note', out_time= NOW(), outMarkby='$secPid' WHERE studentID='$id'  AND (out_time IS NULL OR out_time = '') ORDER BY timestamps DESC LIMIT 1";
+              if (!mysqli_query($conn, $sql)) {
+                // echo "securitylogs record UPDATE successfully";
+                throw new Exception("Error updating into securitylogs: " . mysqli_error($conn));
+              }
+      
+              // Get the last inserted ID to use as the foreign key in `securityperson`
+              $user_id = mysqli_insert_id($conn);
+      
+              $sql2 = "UPDATE student SET status='$statusval' WHERE studentID='$id';";
+              if (!mysqli_query($conn, $sql2)) {
+                throw new Exception("Error updating user_profiles: " . mysqli_error($conn));
+              }
+      
+              mysqli_commit($conn);
+              echo "<script>history.back();</script>";
+              exit();
+      
+            }catch(Exception $e){
+              mysqli_rollback($conn);
+               echo "Transaction failed: " . $e->getMessage();
+            }
+            
+          }
+        }
+      
+      }
+
+}} ?>
