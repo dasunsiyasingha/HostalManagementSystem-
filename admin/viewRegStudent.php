@@ -19,7 +19,12 @@
 </head>
 <body>
     <div class="container border border-danger" style="height:100vh; width:100vw;" >
-        <!-- <div class="row border border-primary" style="width:200px;"></div> -->
+        <div class="row mt-5" style="width: 300px">
+          <div class="col"><button type="button" onclick="location.href='registerStudent.php';" class="mt-3 ms-4 "
+            style="width:80%; height:40px; background-color:#275d8b;border: none; color: white; ">
+            <i class="bi bi-plus pt-4 pb-5 "></i> Add new Students
+          </button></div>
+        </div>
         <div class="row mt-4">
                 <div class="col-md-12 mt-3 mb-3 border border-primary bg-primary rounded-2 m-auto"  style="width:95%">
                     <div class= "text text-center  p-2 h3"><b style="color:white;">Registered Students Details</b></div>

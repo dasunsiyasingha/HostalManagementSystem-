@@ -39,8 +39,11 @@
 </head>
 
 <body>
-  <div class="row  m-auto " style="width:100vw; height:100vh; background-color:#f5f5f5">
+  <!-- <div class="row  m-auto " style="width:100vw; height:100vh; background-color:#f5f5f5"> -->
     <div class="row  m-auto " style="width:70vw; height:100vh; background-color:#ffffff">
+      <div class="row mt-5 m-auto">
+      <div id="liveAlertPlaceholder" class=""></div>
+      </div>
       <div>
         <h3 class=" card-title text-center mt-3" style="color:#507297">Mannage Access</h3>
         <hr style="border: 1px solid #507297; width: 100%; mt-3;">
@@ -70,7 +73,9 @@
                             <th class="sorting" tabindex="0" aria-controls="add-row" rowspan="1" colspan="1"
                               aria-label="Id: activate to sort column ascending" style="width: 363.612px;">Name</th>
                             <th style="width: 120.7px;" class="sorting" tabindex="0" aria-controls="add-row" rowspan="1"
-                              colspan="1" aria-label="Action: activate to sort column ascending">Give Access</th>
+                              colspan="1" aria-label="Action: activate to sort column ascending">Mark Access</th>
+                            <th style="width: 120.7px;" class="sorting" tabindex="0" aria-controls="add-row" rowspan="1"
+                              colspan="1" aria-label="Action: activate to sort column ascending">Site Access</th>
                            
                           </tr>
                         </thead>
@@ -79,48 +84,45 @@
                             <th rowspan="1" colspan="1">Security ID</th>
                             <th rowspan="1" colspan="1">Name</th>
                             
-                            <th rowspan="1" colspan="1">Give Access</th>
+                            <th rowspan="1" colspan="1">Mark Access</th>
+                            <th rowspan="1" colspan="1">Site Access</th>
                           
                           </tr>
                         </tfoot>
                         <tbody>
-                          <tr role="row" class="odd">
+                          <!-- <tr role="row" class="odd">
                             <td class="sorting_1">Airi Satou</td>
-                            <td>Accountant</td>
-                           
-                            
-
-                            <td>
-                              <div class="form-check form-switch">
-                                <input class="form-check-input status-toggle" type="checkbox" role="switch" id="give_access">
-                                <label class="form-check-label" for="give_access" id="statusLabel"></label>
-                              </div>
-                              
-                            </td>
-
-                            
-                          </tr>
+                            <td>Accountant</td> 
+                            <td>CHANGE MARK ACCESS</td> 
+                            <td>CHANGE SITE ACCESS</td> 
+                          </tr> -->
 
 
                           <?php 
-                          $sql = "SELECT securityperson.sid AS s_id, securityperson.name AS s_name, securityperson.password AS s_pswd, securityperson.access AS s_access FROM securityperson LEFT JOIN securitylogs ON securityperson.sid = securitylogs.sid AND securitylogs.timestamps = (SELECT MAX(timestamps) FROM securitylogs AS sl WHERE sl.sid = securityperson.sid);";
+                          $sql = "SELECT securityperson.sid AS s_id, securityperson.name AS s_name, securityperson.status AS s_status, securityperson.mark_access AS mark_access, securityperson.site_access AS site_access FROM securityperson;";
                           if ($result = $conn->query($sql)) {
                             while($row = $result->fetch_assoc()){
+
                               echo '<tr role="row" class="odd">';
                               echo '<td>'.$row['s_id'].'</td>';
                               echo '<td>'.$row['s_name'].'</td>';
 
-                              $color = !empty($row['s_access']) ? 'success' : 'danger';
-                              $access = !empty($row['s_access']) ? 'ALLOWED' : 'DENIED';
-                              $checked = !empty($row['s_access']) ? 'checked' : '';
+                              $m_color = !empty($row['mark_access']) ? 'success' : 'danger';
+                              $m_access = !empty($row['mark_access']) ? 'ALLOWED' : 'DENIED';
+                              $m_checked = !empty($row['mark_access']) ? 'checked' : '';
+                              
+                              $s_color = !empty($row['site_access']) ? 'success' : 'danger';
+                              $s_access = !empty($row['site_access']) ? 'ALLOWED' : 'DENIED';
+                              $s_checked = !empty($row['site_access']) ? 'checked' : '';
+// MARK ACCESS CHANGE BUTTON
 
                               echo '<td>
                               <div class="form-check form-switch">
-                                <span class="badge rounded-2 p-2 text-bg-'.$color.'" role="button" id="s_access'.$row['s_id'].'" style="cursor: pointer; width:65px;" data-bs-toggle="modal" data-bs-target="#access'.$row['s_id'].'" >'.$access.' </span>
+                                <span class="badge rounded-2 p-2 text-bg-'.$m_color.'" role="button" id="s_access'.$row['s_id'].'" style="cursor: pointer; width:65px;" data-bs-toggle="modal" data-bs-target="#m_access'.$row['s_id'].'" >'.$m_access.' </span>
                               
                             </td>
-                            <!--ACCESS CHANGE Modal -->
-                            <div class="modal fade" id="access'.$row['s_id'].'" tabindex="-1" role="dialog" aria-hidden="true">
+            <!--MARK ACCESS CHANGE Modal -->
+                            <div class="modal fade" id="m_access'.$row['s_id'].'" tabindex="-1" role="dialog" aria-hidden="true">
                               <div class="modal-dialog" role="document">
                                 <div class="modal-content">
                                   <div class="modal-header border-0">
@@ -142,14 +144,64 @@
                                         <div class="col-sm-12 ">
                                         <input type="text" name="sid" id="sid" value="'.$row['s_id'].'" style="visibility:hidden">
                                           <div class="form-check form-switch">
-                                            <input class="form-check-input" type="checkbox" role="switch" id="editaccess'.$row['s_id'].'" value="1" name="accesscheck" '.$checked.'>
-                                            <label class="form-check-label" for="statuscheck">Status '.$row['s_id'].'</label>
+                                            <input class="form-check-input" type="checkbox" role="switch" id="editMaccess'.$row['s_id'].'" value="1" name="markaccesscheck" '.$m_checked.'>
+                                            <label class="form-check-label" for="editMaccess">Permisson '.$row['s_id'].'</label>
                                           </div>
                                         </div>
 
                                       </div>
                                       <div class="modal-footer border-0">
-                                        <button type="submit" id="accessChange'.$row['s_id'].'" name="accessChange" class="btn btn-primary">
+                                        <button type="submit" id="markAccessChange'.$row['s_id'].'" name="markAccessChange" class="btn btn-primary">
+                                          Change
+                                        </button>
+                                        <button type="button" class="btn btn-danger" data-dismiss="modal">
+                                          Close
+                                        </button>
+                                      </div>
+                                    </form>
+                                  </div>
+                                  
+                                </div>
+                              </div>
+                            </div>';
+// SITE ACCESS CHANGE BUTTON
+
+                            echo '<td>
+                              <div class="form-check form-switch">
+                                <span class="badge rounded-2 p-2 text-bg-'.$s_color.'" role="button" id="s_access'.$row['s_id'].'" style="cursor: pointer; width:65px;" data-bs-toggle="modal" data-bs-target="#s_access'.$row['s_id'].'" >'.$s_access.' </span>
+                              
+                            </td>
+              <!--SITE ACCESS CHANGE Modal -->
+                            <div class="modal fade" id="s_access'.$row['s_id'].'" tabindex="-1" role="dialog" aria-hidden="true">
+                              <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                  <div class="modal-header border-0">
+                                    <h5 class="modal-title">
+                                      <span class="fw-mediumbold"> Change</span>
+                                      <span class="fw-light"> Status </span>
+                                    </h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                      <span aria-hidden="true">&times;</span>
+                                    </button>
+                                  </div>
+                                  <div class="modal-body">
+                                    <p class="small">
+                                      Create a new row using this form, make sure you
+                                      fill them all
+                                    </p>
+                                    <form role="form" method="post">
+                                      <div class="row">
+                                        <div class="col-sm-12 ">
+                                        <input type="text" name="sid" id="sid" value="'.$row['s_id'].'" style="visibility:hidden">
+                                          <div class="form-check form-switch">
+                                            <input class="form-check-input" type="checkbox" role="switch" id="editSaccess'.$row['s_id'].'" value="1" name="siteaccesscheck" '.$s_checked.'>
+                                            <label class="form-check-label" for="editSaccess">Permisson '.$row['s_id'].'</label>
+                                          </div>
+                                        </div>
+
+                                      </div>
+                                      <div class="modal-footer border-0">
+                                        <button type="submit" id="siteAccessChange'.$row['s_id'].'" name="siteAccessChange" class="btn btn-primary">
                                           Change
                                         </button>
                                         <button type="button" class="btn btn-danger" data-dismiss="modal">
@@ -181,7 +233,7 @@
 
 
         </div>
-      </div>
+      <!-- </div> -->
 
       <!-- <div >
                   <button type="button" data-bs-toggle="tooltip" title="" class="btn btn-link btn-primary btn-lg" data-original-title="Edit Task">
@@ -272,6 +324,21 @@
             $("#addRowModal").modal("hide");
           });
         });
+
+
+        //FOR ALERT BOX
+        const alertPlaceholder = document.getElementById('liveAlertPlaceholder')
+        const appendAlert = (message, type) => {
+            const wrapper = document.createElement('div')
+            wrapper.innerHTML = [
+                `<div class="alert alert-${type} alert-dismissible text-${type} rounded-3 " role="alert">`,
+                `   <div>${message}</div>`,
+                '   <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>',
+                '</div>'
+            ].join('')
+
+            alertPlaceholder.append(wrapper)
+        }
       </script>
 
 </div>
@@ -280,18 +347,85 @@
 
 
       <?php
-      if(isset($_POST['accessChange'])){
-
+      if(isset($_POST['markAccessChange'])){
+        
         $sid = $_POST['sid'];
-        $access = $_POST['accesscheck'];
+        $access = $_POST['markaccesscheck'];
         $accessval = $access ? '1' : '0';
 
-        $sql = "UPDATE securityperson SET access='$accessval' WHERE sid='$sid'"; 
-        if (mysqli_query($conn, $sql)) {
-          echo "Access change is successfully";
-        } else {
-          echo "Access Update Error: " . $sql . "<br>" . mysqli_error($conn);
+        try{
+          $sql = "SELECT site_access FROM securityperson WHERE sid = '$sid'";
+          $result = mysqli_query($conn, $sql);
+
+          if (!$result || mysqli_num_rows($result) == 0) {
+            throw new Exception("Not found security persons : ");
+          }
+
+          $row = mysqli_fetch_assoc($result);
+          $site_access = $row['site_access'];
+          
+          if($site_access){
+            $sql2 = "UPDATE securityperson SET mark_access='$accessval' WHERE sid='$sid'"; 
+            if (!mysqli_query($conn, $sql2)) {
+              throw new Exception("Error updating securityperson: " . mysqli_error($conn));
+            }else{
+              echo "<script>history.back();</script>";
+            }
+
+          }else{
+            // echo "You cann't give access to mark becouse That security person Not allowed to Site";
+            echo "<script>appendAlert('You cann\'t give access to mark becouse That security person Not allowed to Site', 'danger');</script>";
+
+          }
+
+        }catch(Exception $e){
+          mysqli_rollback($conn);
+          echo "Data loading is failed " . $e->getMessage();
         }
+
+
+      }
+
+      if(isset($_POST['siteAccessChange'])){
+
+        $sid = $_POST['sid'];
+        $access = $_POST['siteaccesscheck'];
+        $accessval = $access ? '1' : '0';
+
+        try{
+          //FOR CHECK SECURITY PERSON STATUS
+          $sql = "SELECT status FROM securityperson WHERE sid = '$sid'";
+          $result = mysqli_query($conn, $sql);
+  
+  
+          if (!$result || mysqli_num_rows($result) == 0) {
+            throw new Exception("Not found security persons : ");
+          }
+  
+          $row = mysqli_fetch_assoc($result);
+          $status = $row['status'];
+            
+          if($status){
+            $sql = "UPDATE securityperson SET site_access='$accessval' WHERE sid='$sid'"; 
+            if (!mysqli_query($conn, $sql)) {
+              // echo "Access change is successfully";
+              throw new Exception("Error change securityperson site access: " . mysqli_error($conn));
+            } else {
+              echo "<script>history.back();</script>";
+            }
+  
+          }else{
+            // echo "Cann't give Access becouse That security Person status is OFF";
+            echo "<script>appendAlert('Cann\'t give Access becouse That security Person status is OFF', 'danger');</script>";
+
+          }
+
+        }catch(Exception $e){
+          mysqli_rollback($conn);
+          echo "Data loading is failed " . $e->getMessage();
+        }
+
+
       }
     } 
     

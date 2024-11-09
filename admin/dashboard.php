@@ -18,9 +18,9 @@
                 <!-- <div class="row justify-content-center align-items-center "style="width: 100%;">  -->
 
                     <div class="col-md-4 d-flex justify-content-center m-auto mt-4"style="width: 100%; height: 80%;">
-                        <div class="card card-secondary" style="width: 100%; height: 100%; cursor: pointer;" role="button" onclick="location.href='registerStudent.php';">
+                        <div class="card card-secondary" style="width: 100%; height: 100%; cursor: pointer;" role="button" onclick="location.href='viewRegStudent.php';">
                             <div class="card-body skew-shadow position-relative">
-                                <h5 class="op-8 text-center position-absolute top-50 start-50 translate-middle fs-2">REGISTER STUDENT</h5>
+                                <h5 class="op-8 text-center position-absolute top-50 start-50 translate-middle fs-2">MANAGE STUDENTS</h5>
                             </div>
                         </div>
                     </div>
@@ -30,13 +30,15 @@
             
             <div class="col-4 align-self-center  " style=height:50%; >
                     <div class="col-md-4 d-flex justify-content-center m-auto mt-4"style="width: 100%; height: 80%;">
-                        <div class="card card-secondary" style="width: 100%; height: 100%; cursor: pointer;" role="button" onclick="location.href='viewRegStudent.php';">
+                        <div class="card card-secondary" style="width: 100%; height: 100%; cursor: pointer;" role="button" onclick="location.href='viewStudentLogs.php';">
                             <div class="card-body skew-shadow position-relative">
-                                <h5 class="op-8 text-center position-absolute top-50 start-50 translate-middle fs-2">VIEW STUDENT LIST</h5>
+                                <h5 class="op-8 text-center position-absolute top-50 start-50 translate-middle fs-2">VIEW STUDENT LOGS</h5>
                             </div>
                         </div>
                     </div>
             </div>
+
+            
             <div class="col-4 align-self-center  " style=height:50%; >
                     <div class="col-md-4 d-flex justify-content-center m-auto mt-4"style="width: 100%; height: 80%;">
                         <div class="card card-secondary" style="width: 100%; height: 100%; cursor: pointer;" role="button" onclick="location.href='managesecurity.php';">

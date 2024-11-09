@@ -15,7 +15,7 @@
         <div class="col-md-12">
                 <div class="card">
                   <div class="card-header">
-                    <h4 class="card-title">Multi Filter Select</h4>
+                    <h4 class="card-title">Rooms Details Table</h4>
                   </div>
                   <div class="card-body">
                     <div class="table-responsive">
@@ -48,18 +48,6 @@
                           </tr>
                         </tfoot>
                         <tbody>
-                          <tr>
-                            <td>Tiger Nixon</td>
-                            <td>System Architect</td>
-                            <td>Edinburgh</td>
-                            <td>61</td>
-                            <td>2011/04/25</td>
-                            <td>$320,800</td>
-                            <td>$320,800</td>
-                            <td>$320,800</td>
-                          </tr>
-
-
 
                           <?php
                             $sql="SELECT room.roomNo AS room_no, GROUP_CONCAT(student.studentID ORDER BY student.studentID SEPARATOR ', ') AS student_ids, GROUP_CONCAT(CONCAT(chair.chairID, IF(chair.demageState = 'damaged', ' (damaged)', '')) SEPARATOR ', ') AS chairs, GROUP_CONCAT(CONCAT(desk.deskID, IF(desk.demageState = 'damaged', ' (damaged)', '')) SEPARATOR ', ') AS desks, GROUP_CONCAT(CONCAT(bed.bedID, IF(bed.demageState = 'damaged', ' (damaged)', '')) SEPARATOR ', ') AS beds, GROUP_CONCAT(CONCAT(mettress.mettressID, IF(mettress.demageState = 'damaged', ' (damaged)', ''))SEPARATOR ', ') AS mattresses, GROUP_CONCAT(CONCAT(rack.rackID, IF(rack.demageState = 'damaged', ' (damaged)', '')) SEPARATOR ', ') AS racks, GROUP_CONCAT(CONCAT(locker.lockerID, IF(locker.demageState = 'damaged', ' (damaged)', '')) SEPARATOR ', ') AS lockers FROM room LEFT JOIN student ON room.roomNo = student.stRoomNo LEFT JOIN chair ON room.roomNo = chair.roomNo LEFT JOIN desk ON room.roomNo = desk.roomNo LEFT JOIN bed ON room.roomNo = bed.roomNo LEFT JOIN mettress ON room.roomNo = mettress.roomNo LEFT JOIN rack ON room.roomNo = rack.roomNo LEFT JOIN locker ON room.roomNo = locker.roomNo GROUP BY room.roomNo;";
@@ -68,7 +56,13 @@
                                 while ($row = $result->fetch_assoc()) {
                                     echo "<tr>";
                                     echo "<td>{$row['room_no']}</td>";
-                                    echo "<td>{$row['student_ids']}</td>";
+                                    echo "<td>";
+                                    if(!empty($row['student_ids'])){
+                                      echo "{$row['student_ids']}";
+                                    }else{
+                                      echo "No members";
+                                    }
+                                    echo "</td>";
 
                                     // Display each item type with damaged items in red
                                     foreach (['chairs', 'desks', 'beds', 'mattresses', 'racks', 'lockers'] as $item) {
@@ -76,10 +70,14 @@
                                       
                                       echo "<td>";
                                       foreach ($itemsArray as $singleItem) {
+                                        if(!empty($singleItem)){
                                           // Check if the item is damaged
-                                          $style = strpos($singleItem, '(damaged)') !== false ? 'color:red;' : '';
-                                          echo "<span style='{$style}'>{$singleItem}</span><br>";
-                                      }
+                                            $style = strpos($singleItem, '(damaged)') !== false ? 'color:red;' : '';
+                                            echo "<span style='{$style}'>{$singleItem}</span><br>";
+                                          }else{
+                                            echo 'No Items';
+                                          }
+                                        }
                                       
                                       echo "</td>";
                                     }

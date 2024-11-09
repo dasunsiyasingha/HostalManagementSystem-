@@ -36,9 +36,10 @@
                       >
                         <thead>
                           <tr>
-                            <th>Date</th>
+                            <th>timestamps</th>
                             <th>Security ID</th>
-                            <th>Name</th>
+                            <th>Note</th> 
+                            <th>status</th>
                             <th>Start Time</th>
                             <th>Leave Time</th>
                           </tr>
@@ -54,14 +55,6 @@
                           </tr>
                         </tfoot>
                         <tbody>
-                          <tr>
-                            <th>timestamps</th>
-                            <th>Security ID</th>
-                            <th>Note</th> 
-                            <th>status</th>
-                            <th>Start Time</th>
-                            <th>Leave Time</th>
-                          </tr>
 
                           <?php
                             $sql = "SELECT * FROM `securitylogs` WHERE 1";
@@ -78,7 +71,7 @@
                               }
 
                             }else{
-
+                              echo 'Table display have a some error..! please try again...';
                             }
                           ?>
                           

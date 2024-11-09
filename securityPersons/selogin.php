@@ -110,7 +110,7 @@
       notice.style.visibility = 'visible';
       </script>";
   }else{
-    $sql = "SELECT securityPersonID, password	FROM securityperson WHERE securityPersonID=?";
+    $sql = "SELECT sid, password	FROM securityperson WHERE sid=?";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param('s',$securityID);
     $stmt->execute();
@@ -125,7 +125,12 @@
       $_SESSION['seclogin'] = $_POST['securityID'];
       echo "<script type='text/javascript'> document.location ='dashboard.php'; </script>";
     } else{
-      echo "<script type='text/javascript'>document.getElementById('notice').style.visibility = 'visible';</script>";
+      echo "<script type='text/javascript'>
+            var notice = document.getElementById('notice');
+            notice.innerHTML = 'Invalid Details.. Please Try Again!';
+            notice.style.visibility = 'visible';
+            </script>";
+
     }
   }
 }
