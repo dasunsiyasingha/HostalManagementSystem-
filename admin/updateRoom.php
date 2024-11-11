@@ -11,11 +11,12 @@
     <?php
         include '../libraries/styles.php';
     ?>
+
 </head>
 <body>
     
-    <div class="row border border-primary" style="width:100vw;">
-            <div class="row m-auto border border-primary" style="width:100%;">
+    <div class="row " style="width:100vw;">
+            <div class="row m-auto" style="width:100%;">
                 <!-- HEADER LINE -->
                 <div class="row" style=height:30%; >
                         <div class="col-12 d-flex justify-content-center m-auto mt-4 bg-primary p-4 card-body skew-shadow position-relative rounded-2">
@@ -25,8 +26,9 @@
                 <!--CLOSED HEADER LINE -->
 
                 <!-- SELECT DROP DOWN LIST ROOM NUMBERS ROW -->
+                
                 <div class="row">
-                    <div class="col-4 border border-success">
+                    <div class="col-4 ">
                         <div class="form-group">
                             <label for="stbatch">Select Room</label>
                             <div class="input-group">
@@ -65,12 +67,12 @@
                         ?>
                     </div>
                         
-                    <div class="col-4 border border-success"></div>
-                    <div class="col-4 border border-success"></div>
+                    <div class="col-4">
+                    </div>
+                    <div class="col-4"></div>
                 </div>
                 <!-- SELECT DROP DOWN LIST ROOM NUMBERS ROW END -->
-                        
-                    <div class="row border border-success">
+                    <div class="row" >
                         <div class="col-6">
                         <div class="card">
                             <div class="card-header">
@@ -821,10 +823,13 @@
                                     </div>
                                     </div>
                             </div>
-                        <!-- </div> col-6 closed (chair) -->
-
-
+                        <!-- </div>  -->
+                        <!-- </div>  -->
+                        <!-- col-6 closed (chair) -->
+                        
+<hr>                        
 <!-- -----------------------------------------BEDs TABLE------------------------------------------------------------ -->
+<!-- <div class="row"> -->
                         
                         <div class="col-6"><!--  (Beds) -->
                         <div class="card">
@@ -987,7 +992,7 @@
                                                             </div>
                                                         </td>
 
-<!--EDIT CHAIR Modal -->
+<!--EDIT BED Modal -->
         <div class="modal fade" 
              id="updateBed'.$bedid.'" 
              tabindex="-1" 
@@ -1199,7 +1204,8 @@
                                     </div>
                                     </div>
                             </div>
-                        </div> <!-- col-6 closed (Beds) -->
+                        <!-- </div> -->
+                         <!-- col-6 closed (Beds) -->
 
 
 
@@ -1210,7 +1216,7 @@
                             <div class="card-header">
                                 <div class=" d-flex justify-content-between">
                                     <div><h4 class="card-title mb-2">Mettresses Details</h4></div>
-                                    <div><button class="btn btn-primary ms-5" data-bs-toggle="modal" data-bs-target="#addNewBed" >Add new Mettress</button></div>
+                                    <div><button class="btn btn-primary ms-5" data-bs-toggle="modal" data-bs-target="#addNewMettress" >Add new Mettress</button></div>
                                 </div>
                             </div>
                             <!-- </div> -->
@@ -1578,11 +1584,772 @@
                                     </div>
                                     </div>
                             </div>
-                        </div> <!-- col-6 closed (mettress) -->
+                        <!-- </div>  -->
+                        <!-- col-6 closed (mettress) -->
+
+<hr>
+
+
+<!-- -----------------------------------------LOCKER TABLE------------------------------------------------------------ -->
                         
-                        <div class="row border border-danger">
+                    <div class="col-6"><!--  (Locker) -->
+                        <div class="card">
+                            <div class="card-header">
+                                <div class=" d-flex justify-content-between">
+                                    <div><h4 class="card-title mb-2">Lockers Details</h4></div>
+                                    <div><button class="btn btn-primary ms-5" data-bs-toggle="modal" data-bs-target="#addNewLocker" >Add new Locker</button></div>
+                                </div>
+                            </div>
+                            <!-- </div> -->
+                            <div class="card-body">
+                                <div class="table-responsive">
+                                <table
+                                    id="basic-datatables"
+                                    class="display table table-striped table-hover"
+                                >
+                                    <thead>
+                                    <tr>
+                                        <th>Room Number</th>
+                                        <th>Locker ID</th>
+                                        <th>Damage Status</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                    </thead>
+                                    <tfoot>
+                                    <tr>
+                                        <th>Room Number</th>
+                                        <th>Locker ID</th>
+                                        <th>Damage Status</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                    </tfoot>
+                                    <tbody>
+
+                                        <?php
+                                        if(isset($roomNumber)){
+                                                $sql = "SELECT room.roomNo AS room_no, locker.lockerID AS locker_id, locker.demageState AS locker_damage FROM room LEFT JOIN locker ON room.roomNo = locker.roomNo WHERE room.roomNo = $roomNumber;";
+
+                                                if ($result = $conn->query($sql)) {
+                                                    
+                                                    while ($row = $result->fetch_assoc()) {
+                                                        if(!empty($row['locker_id'])){
+                                                            $lockerid = $row['locker_id'];
+                                                            $color = $row['locker_damage']=="Damaged" ? "danger" : "success";
+                                                            $status = $row['locker_damage']=="Damaged" ? "Damaged" : "Good";
+                                                            $btnColor = $row['locker_damage']=="Damaged" ? "danger" : "success";
+                                                        
+                                                            echo "<tr>
+                                                                    <td>".$row['room_no']."</td> 
+                                                                    <td>".$lockerid."</td>";
+                                                            
+                                                            echo '<td>
+                                                                    <div class="form-check form-switch">
+                                                                        <span class="badge 
+                                                                                        rounded-2 p-2 
+                                                                                        text-bg-'.$color.'"
+                                                                                        role="button" 
+                                                                                        id="d_status'.$lockerid.'" 
+                                                                                        style="cursor: pointer; 
+                                                                                            width:65px;" 
+                                                                                        data-bs-toggle="modal" 
+                                                                                        data-bs-target="#editLockerstatus'.$lockerid.'" >'.$status.' </span>
+                                                                    </div>
+                                                                </td>
+<!--CHANGE BED STATUS Modal -->
+    <div class="modal fade" 
+            id="editLockerstatus'.$lockerid.'" 
+            tabindex="-1" 
+            role="dialog" 
+            aria-hidden="true">
+
+        <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header border-0">
+                <h5 class="modal-title">
+                    <span class="fw-mediumbold"> Change</span>
+                    <span class="fw-light"> Status </span>
+                </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+            <div class="modal-body">
+                <p class="small p-2 border-left border-info">
+                    Change Locker Status
+                </p>
+                <form role="form" method="post">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="ms-3">
+                                <input type="text" class="btn btn-'.$btnColor.'"
+                                            id="lockerDamgeBtn'.$lockerid.'" 
+                                            name="lockerDamgeBtn"
+                                            class="damageBtn" 
+                                            onclick="lockerToggleStatus'.$lockerid.'()" 
+                                            value="'.$status.'" 
+                                            readonly>
+                                </input>
+
+                                <script>
+                                    function lockerToggleStatus'.$lockerid.'(){
+                                        let damageBtn = document.getElementById("lockerDamgeBtn'.$lockerid.'");
+                                        let value = damageBtn.value;
+                                        if(value == "Damaged"){
+                                            damageBtn.classList.replace("btn-danger", "btn-success");
+                                            damageBtn.innerHTML = "Good";
+                                            damageBtn.value = "Good";
+                                            console.log(damageBtn.value);
+                                        }else{
+                                            damageBtn.classList.replace("btn-success", "btn-danger");
+                                            damageBtn.innerHTML = "Damaged";
+                                            damageBtn.value = "Damaged";
+                                            console.log(damageBtn.value);
+                                        }
+                                    
+                                    }
+                                </script>
+                            
+                            </div>
+                            <input type="text" name="lockerid" id="lockerid" value="'.$lockerid.'" style="visibility:hidden" readonly>
+                        </div>
+                    </div> 
+                    <!-- CLOSED ROW -->
+
+                    <div class="modal-footer border-0">
+                        <button type="submit" id="lockerStatChnge'.$lockerid.'" name="lockerStatChnge" class="btn btn-primary">
+                            Change
+                        </button>
+                        <button type="button" class="btn btn-danger" data-dismiss="modal">
+                            Close
+                        </button>
+                    </div>
+                </form>
+            </div>
+            <!-- modal-body CLOSED-->
+            
+        </div>
+            <!-- modal-content CLOSED-->
+
+    </div>
+</div>';
+                                                    
+
+                                                    echo '<td>
+                                                            <div class="form-button-action">
+                                                                <button type="button" 
+                                                                        title=""
+                                                                        class="btn btn-link btn-primary btn-lg" 
+                                                                        data-original-title="Edit Locker"
+                                                                        data-bs-toggle="modal" 
+                                                                        data-bs-target="#updateLocker'.$lockerid.'"> <i class="fa fa-edit"></i>
+                                                                </button>
+                                                                <button type="button" 
+                                                                        class="btn btn-link btn-danger" 
+                                                                        data-bs-toggle="modal"
+                                                                        data-bs-target="#deleteLocker'.$lockerid.'"
+                                                                        data-original-title="Remove"> <i class="fa fa-times"></i>
+                                                                </button>
+                                                            </div>
+                                                        </td>
+
+<!--EDIT CHAIR Modal -->
+        <div class="modal fade" 
+             id="updateLocker'.$lockerid.'" 
+             tabindex="-1" 
+             role="dialog" 
+             aria-hidden="true">
+
+        <div class="modal-dialog" 
+             role="document">
+
+            <div class="modal-content">
+            <div class="modal-header border-0">
+                <h5 class="modal-title">
+                    <span class="fw-mediumbold"> Edit</span>
+                    <span class="fw-light">Locker '.$lockerid.'</span>
+                </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p class="small">
+                    Create a new row using this form, make sure you fill them all
+                </p>
+
+                <form role="form" method="post">
+                <input id="addLocker" 
+                       name="current_lockerid" 
+                       type="text" 
+                       class="form-control" 
+                       value="'.$lockerid.'" 
+                       style="visibility:hidden" readonly />
+
+                <div class="row">
+                    <div class="col-sm-12 ">
+                        <div class="form-group form-group-default">
+                            
+                            <label>Locker ID</label>
+                            <input id="addLockerid" name="up_Lockerid" type="text" class="form-control" value="'.$lockerid.'" required />
+                            
+                        </div>
+                    </div>
+                    <div class="col-sm-12">
+                        <div class="form-group form-group-default">
+
+                            <label>Room Number</label>
+                            <input id="addRoom" name="up_room" type="text" class="form-control" value= "'.$row['room_no'].'" required />
 
                         </div>
+                    </div>
+                </div>
+
+                <div class="modal-footer border-0">
+                    <button type="submit" id="updatelocker" name="updatelocker" class="btn btn-primary">
+                        Update
+                    </button>
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">
+                        Close
+                    </button>
+                </div>
+            </form>
+            </div>
+            </div>
+        </div>
+        </div>
+
+
+ <!--DELETE CHAIR Modal -->
+        <div class="modal fade" 
+             id="deleteLocker'.$lockerid.'" 
+             tabindex="-1" 
+             role="dialog" 
+             aria-hidden="true">
+
+            <div class="modal-dialog" 
+                 role="document">
+
+            <div class="modal-content">
+                <div class="modal-header border-0">
+                    <h5 class="modal-title">
+                        <span class="fw-mediumbold"> Delete</span>
+                        <span class="fw-light">Locker </span>
+                    </h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+
+                <div class="modal-body">
+                    <p class="small">
+                        You are going to delete '.$lockerid.' Locker. Please confirm to delete?
+                    </p>
+                    <form role="form" method="post">
+                        <input id="delete_Lockerid" name="delete_Lockerid" type="text" value="'.$lockerid.'" style="height:1px; visibility:hidden;" />
+                        <div class="modal-footer border-0">
+                            <button type="submit" id="lockerDelete" name="lockerDelete" class="btn btn-primary">
+                                Delete
+                            </button>
+                            <button type="button" class="btn btn-danger" data-dismiss="modal">
+                                Close
+                            </button>
+                        </div>
+                    </form>
+                </div>
+                
+            </div>
+            </div>
+        </div>';
+
+    echo "</tr>";
+            }else{
+                $lockerid = "No items";
+                $status = "  ";
+            }
+            }
+            $result->free();
+        }
+    }
+?>
+                                    
+                                        </tbody>
+                                    </table>
+                                </div><!-- table-responsive -->
+                            </div><!-- card-body -->
+                            
+<!--ADD NEW METTRESS Modal -->
+                                    <div class="modal fade" id="addNewLocker" tabindex="-1" role="dialog" aria-hidden="true">
+                                    <div class="modal-dialog" role="document">
+                                        <div class="modal-content">
+                                        <div class="modal-header border-0">
+                                            <h5 class="modal-title">
+                                            <span class="fw-mediumbold"> ADD </span>
+                                            <span class="fw-light">New Locker </span>
+                                            </h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <p class="small">
+                                            Add new locker to any Room
+                                            </p>
+                                            <form role="form" method="post">
+                                            <div class="row">
+                                                <div class="col-sm-12 ">
+                                                <div class="form-group form-group-default">
+                                                    <label>Locker ID</label>
+                                                    <input id="addnewLockerid" name="new_lockerid" type="text" class="form-control" required />
+                                                </div>
+                                                </div>
+                                                
+                                                <div class="col-sm-12">
+                                                <div class="form-group form-group-default">
+                                                    <label>Room Number</label>
+                                                    <input id="addnewRoom" name="new_room" type="text" class="form-control" required/>
+                                                </div>
+                                                </div>
+
+                                                <div class="col-sm-12 ">
+                                                <div class="form-group-default" style="border-style: none;">
+                                                    <label>Status</label>
+                                                    <!-- <div class="ms-3"> -->
+                                                        <input type="text" class="mt-2 btn btn-success"
+                                                                    id="lockerDmgState" 
+                                                                    name="lockerDmgState"
+                                                                    class="damageBtn" 
+                                                                    onclick="lockerToggleStatus()" 
+                                                                    value="Good" 
+                                                                    readonly>
+                                                        </input>
+
+                                                        <script>
+                                                            function lockerToggleStatus(){
+                                                                let damageBtn = document.getElementById("lockerDmgState");
+                                                                let value = damageBtn.value;
+                                                                if(value == "Damaged"){
+                                                                    damageBtn.classList.replace("btn-danger", "btn-success");
+                                                                    damageBtn.innerHTML = "Good";
+                                                                    damageBtn.value = "Good";
+                                                                    console.log(damageBtn.value);
+                                                                }else{
+                                                                    damageBtn.classList.replace("btn-success", "btn-danger");
+                                                                    damageBtn.innerHTML = "Damaged";
+                                                                    damageBtn.value = "Damaged";
+                                                                    console.log(damageBtn.value);
+                                                                }
+                                                            
+                                                            }
+                                                        </script>
+                                                    
+                                                    <!-- </div> -->
+                                                </div>
+                                                </div>
+
+                                                </div>
+
+                                            </div>
+                                            <div class="modal-footer border-0">
+                                                <button type="submit" id="addLocker" name="addLocker" class="btn btn-primary">
+                                                Add Locker
+                                                </button>
+                                                <button type="button" class="btn btn-danger" data-dismiss="modal">
+                                                Close
+                                                </button>
+                                            </div>
+                                            </form>
+                                        </div>
+                                        
+                                        </div>
+                                    </div>
+                                    </div>
+                            </div>
+                        <!-- </div> -->
+                         <!-- col-6 closed (locker) -->
+
+
+
+<!-- -----------------------------------------RACK TABLE------------------------------------------------------------ -->
+                        
+                    <div class="col-6"><!--  (Rack) -->
+                        <div class="card">
+                            <div class="card-header">
+                                <div class=" d-flex justify-content-between">
+                                    <div><h4 class="card-title mb-2">Racks Details</h4></div>
+                                    <div><button class="btn btn-primary ms-5" data-bs-toggle="modal" data-bs-target="#addNewRack" >Add new Rack</button></div>
+                                </div>
+                            </div>
+                            <!-- </div> -->
+                            <div class="card-body">
+                                <div class="table-responsive">
+                                <table
+                                    id="basic-datatables"
+                                    class="display table table-striped table-hover"
+                                >
+                                    <thead>
+                                    <tr>
+                                        <th>Room Number</th>
+                                        <th>Rack ID</th>
+                                        <th>Damage Status</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                    </thead>
+                                    <tfoot>
+                                    <tr>
+                                        <th>Room Number</th>
+                                        <th>Rack ID</th>
+                                        <th>Damage Status</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                    </tfoot>
+                                    <tbody>
+
+                                        <?php
+                                        if(isset($roomNumber)){
+                                                $sql = "SELECT room.roomNo AS room_no, rack.rackID AS rack_id, rack.demageState AS rack_damage FROM room LEFT JOIN rack ON room.roomNo = rack.roomNo WHERE room.roomNo = $roomNumber;";
+
+                                                if ($result = $conn->query($sql)) {
+                                                    
+                                                    while ($row = $result->fetch_assoc()) {
+                                                        if(!empty($row['rack_id'])){
+                                                            $rackid = $row['rack_id'];
+                                                            $color = $row['rack_damage']=="Damaged" ? "danger" : "success";
+                                                            $status = $row['rack_damage']=="Damaged" ? "Damaged" : "Good";
+                                                            $btnColor = $row['rack_damage']=="Damaged" ? "danger" : "success";
+                                                        
+                                                            echo "<tr>
+                                                                    <td>".$row['room_no']."</td> 
+                                                                    <td>".$rackid."</td>";
+                                                            
+                                                            echo '<td>
+                                                                    <div class="form-check form-switch">
+                                                                        <span class="badge 
+                                                                                        rounded-2 p-2 
+                                                                                        text-bg-'.$color.'"
+                                                                                        role="button" 
+                                                                                        id="d_status'.$rackid.'" 
+                                                                                        style="cursor: pointer; 
+                                                                                            width:65px;" 
+                                                                                        data-bs-toggle="modal" 
+                                                                                        data-bs-target="#editRackstatus'.$rackid.'" >'.$status.' </span>
+                                                                    </div>
+                                                                </td>
+<!--CHANGE BED STATUS Modal -->
+    <div class="modal fade" 
+            id="editRackstatus'.$rackid.'" 
+            tabindex="-1" 
+            role="dialog" 
+            aria-hidden="true">
+
+        <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header border-0">
+                <h5 class="modal-title">
+                    <span class="fw-mediumbold"> Change</span>
+                    <span class="fw-light"> Status </span>
+                </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+            <div class="modal-body">
+                <p class="small p-2 border-left border-info">
+                    Change Rack Status
+                </p>
+                <form role="form" method="post">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="ms-3">
+                                <input type="text" class="btn btn-'.$btnColor.'"
+                                            id="rackDamgeBtn'.$rackid.'" 
+                                            name="rackDamgeBtn"
+                                            class="damageBtn" 
+                                            onclick="rackToggleStatus'.$rackid.'()" 
+                                            value="'.$status.'" 
+                                            readonly>
+                                </input>
+
+                                <script>
+                                    function rackToggleStatus'.$rackid.'(){
+                                        let damageBtn = document.getElementById("rackDamgeBtn'.$rackid.'");
+                                        let value = damageBtn.value;
+                                        if(value == "Damaged"){
+                                            damageBtn.classList.replace("btn-danger", "btn-success");
+                                            damageBtn.innerHTML = "Good";
+                                            damageBtn.value = "Good";
+                                            console.log(damageBtn.value);
+                                        }else{
+                                            damageBtn.classList.replace("btn-success", "btn-danger");
+                                            damageBtn.innerHTML = "Damaged";
+                                            damageBtn.value = "Damaged";
+                                            console.log(damageBtn.value);
+                                        }
+                                    
+                                    }
+                                </script>
+                            
+                            </div>
+                            <input type="text" name="rackid" id="rackid" value="'.$rackid.'" style="visibility:hidden" readonly>
+                        </div>
+                    </div> 
+                    <!-- CLOSED ROW -->
+
+                    <div class="modal-footer border-0">
+                        <button type="submit" id="rackStatChnge'.$rackid.'" name="rackStatChnge" class="btn btn-primary">
+                            Change
+                        </button>
+                        <button type="button" class="btn btn-danger" data-dismiss="modal">
+                            Close
+                        </button>
+                    </div>
+                </form>
+            </div>
+            <!-- modal-body CLOSED-->
+            
+        </div>
+            <!-- modal-content CLOSED-->
+
+    </div>
+</div>';
+                                                    
+
+                                                    echo '<td>
+                                                            <div class="form-button-action">
+                                                                <button type="button" 
+                                                                        title=""
+                                                                        class="btn btn-link btn-primary btn-lg" 
+                                                                        data-original-title="Edit Rack"
+                                                                        data-bs-toggle="modal" 
+                                                                        data-bs-target="#updateRack'.$rackid.'"> <i class="fa fa-edit"></i>
+                                                                </button>
+                                                                <button type="button" 
+                                                                        class="btn btn-link btn-danger" 
+                                                                        data-bs-toggle="modal"
+                                                                        data-bs-target="#deleteRack'.$rackid.'"
+                                                                        data-original-title="Remove"> <i class="fa fa-times"></i>
+                                                                </button>
+                                                            </div>
+                                                        </td>
+
+<!--EDIT CHAIR Modal -->
+        <div class="modal fade" 
+             id="updateRack'.$rackid.'" 
+             tabindex="-1" 
+             role="dialog" 
+             aria-hidden="true">
+
+        <div class="modal-dialog" 
+             role="document">
+
+            <div class="modal-content">
+            <div class="modal-header border-0">
+                <h5 class="modal-title">
+                    <span class="fw-mediumbold"> Edit</span>
+                    <span class="fw-light">Rack '.$rackid.'</span>
+                </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p class="small">
+                    Create a new row using this form, make sure you fill them all
+                </p>
+
+                <form role="form" method="post">
+                <input id="addRack" 
+                       name="current_rackid" 
+                       type="text" 
+                       class="form-control" 
+                       value="'.$rackid.'" 
+                       style="visibility:hidden" readonly />
+
+                <div class="row">
+                    <div class="col-sm-12 ">
+                        <div class="form-group form-group-default">
+                            
+                            <label>Rack ID</label>
+                            <input id="addRackid" name="up_Rackid" type="text" class="form-control" value="'.$rackid.'" required />
+                            
+                        </div>
+                    </div>
+                    <div class="col-sm-12">
+                        <div class="form-group form-group-default">
+
+                            <label>Room Number</label>
+                            <input id="addRoom" name="up_room" type="text" class="form-control" value= "'.$row['room_no'].'" required />
+
+                        </div>
+                    </div>
+                </div>
+
+                <div class="modal-footer border-0">
+                    <button type="submit" id="updaterack" name="updaterack" class="btn btn-primary">
+                        Update
+                    </button>
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">
+                        Close
+                    </button>
+                </div>
+            </form>
+            </div>
+            </div>
+        </div>
+        </div>
+
+
+ <!--DELETE CHAIR Modal -->
+        <div class="modal fade" 
+             id="deleteRack'.$rackid.'" 
+             tabindex="-1" 
+             role="dialog" 
+             aria-hidden="true">
+
+            <div class="modal-dialog" 
+                 role="document">
+
+            <div class="modal-content">
+                <div class="modal-header border-0">
+                    <h5 class="modal-title">
+                        <span class="fw-mediumbold"> Delete</span>
+                        <span class="fw-light">Rack </span>
+                    </h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+
+                <div class="modal-body">
+                    <p class="small">
+                        You are going to delete '.$rackid.' Rack. Please confirm to delete?
+                    </p>
+                    <form role="form" method="post">
+                        <input id="delete_Rackid" name="delete_Rackid" type="text" value="'.$rackid.'" style="height:1px; visibility:hidden;" />
+                        <div class="modal-footer border-0">
+                            <button type="submit" id="rackDelete" name="rackDelete" class="btn btn-primary">
+                                Delete
+                            </button>
+                            <button type="button" class="btn btn-danger" data-dismiss="modal">
+                                Close
+                            </button>
+                        </div>
+                    </form>
+                </div>
+                
+            </div>
+            </div>
+        </div>';
+
+    echo "</tr>";
+            }else{
+                $rackid = "No items";
+                $status = "  ";
+            }
+            }
+            $result->free();
+        }
+    }
+?>
+                                    
+                                        </tbody>
+                                    </table>
+                                </div><!-- table-responsive -->
+                            </div><!-- card-body -->
+                            
+<!--ADD NEW METTRESS Modal -->
+                                    <div class="modal fade" id="addNewRack" tabindex="-1" role="dialog" aria-hidden="true">
+                                    <div class="modal-dialog" role="document">
+                                        <div class="modal-content">
+                                        <div class="modal-header border-0">
+                                            <h5 class="modal-title">
+                                            <span class="fw-mediumbold"> ADD </span>
+                                            <span class="fw-light">New Rack </span>
+                                            </h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <p class="small">
+                                            Add new rack to any Room
+                                            </p>
+                                            <form role="form" method="post">
+                                            <div class="row">
+                                                <div class="col-sm-12 ">
+                                                <div class="form-group form-group-default">
+                                                    <label>Rack ID</label>
+                                                    <input id="addnewRackid" name="new_rackid" type="text" class="form-control" required />
+                                                </div>
+                                                </div>
+                                                
+                                                <div class="col-sm-12">
+                                                <div class="form-group form-group-default">
+                                                    <label>Room Number</label>
+                                                    <input id="addnewRoom" name="new_room" type="text" class="form-control" required/>
+                                                </div>
+                                                </div>
+
+                                                <div class="col-sm-12 ">
+                                                <div class="form-group-default" style="border-style: none;">
+                                                    <label>Status</label>
+                                                    <!-- <div class="ms-3"> -->
+                                                        <input type="text" class="mt-2 btn btn-success"
+                                                                    id="rackDmgState" 
+                                                                    name="rackDmgState"
+                                                                    class="damageBtn" 
+                                                                    onclick="rackToggleStatus()" 
+                                                                    value="Good" 
+                                                                    readonly>
+                                                        </input>
+
+                                                        <script>
+                                                            function rackToggleStatus(){
+                                                                let damageBtn = document.getElementById("rackDmgState");
+                                                                let value = damageBtn.value;
+                                                                if(value == "Damaged"){
+                                                                    damageBtn.classList.replace("btn-danger", "btn-success");
+                                                                    damageBtn.innerHTML = "Good";
+                                                                    damageBtn.value = "Good";
+                                                                    console.log(damageBtn.value);
+                                                                }else{
+                                                                    damageBtn.classList.replace("btn-success", "btn-danger");
+                                                                    damageBtn.innerHTML = "Damaged";
+                                                                    damageBtn.value = "Damaged";
+                                                                    console.log(damageBtn.value);
+                                                                }
+                                                            
+                                                            }
+                                                        </script>
+                                                    
+                                                    <!-- </div> -->
+                                                </div>
+                                                </div>
+
+                                                </div>
+
+                                            </div>
+                                            <div class="modal-footer border-0">
+                                                <button type="submit" id="addRack" name="addRack" class="btn btn-primary">
+                                                Add Rack
+                                                </button>
+                                                <button type="button" class="btn btn-danger" data-dismiss="modal">
+                                                Close
+                                                </button>
+                                            </div>
+                                            </form>
+                                        </div>
+                                        
+                                        </div>
+                                    </div>
+                                    </div>
+                            </div>
+                        </div> <!-- col-6 closed (rack) -->
+                        
+                        <!-- <div class="row border border-danger">
+
+                        </div> -->
 
 
                         <!-- <div class="col-md-4 border border-success">
@@ -1599,7 +2366,7 @@
     
 
     <!-- Include Bootstrap JS Bundle with Popper.js -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
         <!-- Fonts and icons -->
     <!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></> -->
     <script src="../assets/js/plugin/webfont/webfont.min.js"></script>
@@ -1608,7 +2375,7 @@
 </html>
 
 <?php
-// ------------------------------------------------------------ ALL Functions of Desk
+// ------------------------------------------------------------ ALL Functions of Desk --------------------------------------------------
 if(isset($_POST['deskStatChnge'])){
     $deskId = $_POST['deskid'];
     $damageStatus = $_POST['deskDamgeBtn'];
@@ -1677,7 +2444,7 @@ if(isset($_POST['addDesk'])){
 }
 
 
-// ------------------------------------------------------------------------ ALL Functions of Chair
+// ------------------------------------------------------------------------ ALL Functions of Chair ------------------------------------------
 if(isset($_POST['chairStatChnge'])){
     $chairId = $_POST['chairid'];
     $damageStatus = $_POST['chairDamgeBtn'];
@@ -1753,7 +2520,7 @@ if(isset($_POST['addChair'])){
 }
 
 
-// ------------------------------------------------------------------------ ALL Functions of Bed
+// ------------------------------------------------------------------------ ALL Functions of Bed -----------------------------------------
 if(isset($_POST['bedStatChnge'])){
     $bedId = $_POST['bedid'];
     $damageStatus = $_POST['bedDamgeBtn'];
@@ -1823,6 +2590,239 @@ if(isset($_POST['addBed'])){
         } else {
             // Display a generic error message for other SQL errors
             echo "<script>alert('An error occurred while updating the bed information.');</script>";
+        }
+    }
+
+}
+
+
+
+
+// ------------------------------------------------------------------------ ALL Functions of METTRESS --------------------------------------
+if(isset($_POST['mettressStatChnge'])){
+    $mettressId = $_POST['mettressid'];
+    $damageStatus = $_POST['mettressDamgeBtn'];
+
+    $sql = "UPDATE mettress SET demageState = '$damageStatus' WHERE mettressID = '$mettressId';";
+    
+    if (mysqli_query($conn, $sql)) {
+        echo "Mettress status Changed";
+    } else {
+        echo "Mettress status Changing Error: " . $sql . "<br>" . mysqli_error($conn);
+    }
+
+}
+
+if(isset($_POST['updatemettress'])){
+    $currentMettressId = $_POST['current_mettressid'];
+    $up_mettressId = $_POST['up_Mettressid'];
+    $up_roomNo = $_POST['up_room'];
+
+    
+    try{
+        $sql = "UPDATE mettress SET mettressID='$up_mettressId', roomNo ='$up_roomNo' WHERE mettressID = '$currentMettressId'";
+        mysqli_query($conn, $sql);
+    
+        echo "Mettress details updated";
+
+    }catch(mysqli_sql_exception $e){
+        if (strpos($e->getMessage(), 'Duplicate entry') !== false) {
+            // Display a custom error message
+            echo "<script>alert('Already have that ID. please use another ID.');</script>";
+        } else {
+            // Display a generic error message for other SQL errors
+            echo "<script>alert('An error occurred while updating the mettress information.');</script>";
+        }
+    }
+
+}
+
+if(isset($_POST['mettressDelete'])){
+    $del_MettressId = $_POST['delete_Mettressid'];
+
+    $sql = "DELETE FROM mettress WHERE mettressID = '$del_MettressId'";
+    
+    if (mysqli_query($conn, $sql)) {
+        echo "Mettress details Deleted";
+    } else {
+        echo "Mettress details delete Error: " . $sql . "<br>" . mysqli_error($conn);
+    }
+
+}
+
+if(isset($_POST['addMettress'])){
+    $new_MettressId = $_POST['new_mettressid'];
+    $roomId = $_POST['new_room'];
+    $mettressDamgeSt = $_POST['mettressDmgState'];
+
+    try{
+        $sql = "INSERT INTO mettress(mettressID, demageState, roomNo) VALUES ('$new_MettressId','$mettressDamgeSt','$roomId')";
+        mysqli_query($conn, $sql);
+    
+        echo "New Mettress details Added";
+        
+    }catch(mysqli_sql_exception $e){
+        if (strpos($e->getMessage(), 'Duplicate entry') !== false) {
+            // Display a custom error message
+            echo "<script>alert('Already have that ID. please use another ID.');</script>";
+        } else {
+            // Display a generic error message for other SQL errors
+            echo "<script>alert('An error occurred while updating the mettress information.');</script>";
+        }
+    }
+
+}
+
+
+
+
+// ------------------------------------------------------------------------ ALL Functions of LOCKER -----------------------------------------
+if(isset($_POST['lockerStatChnge'])){
+    $lockerId = $_POST['lockerid'];
+    $damageStatus = $_POST['lockerDamgeBtn'];
+
+    $sql = "UPDATE locker SET demageState = '$damageStatus' WHERE lockerID = '$lockerId';";
+    
+    if (mysqli_query($conn, $sql)) {
+        echo "Locker status Changed";
+    } else {
+        echo "Locker status Changing Error: " . $sql . "<br>" . mysqli_error($conn);
+    }
+
+}
+
+if(isset($_POST['updatelocker'])){
+    $currentLockerId = $_POST['current_lockerid'];
+    $up_lockerId = $_POST['up_Lockerid'];
+    $up_roomNo = $_POST['up_room'];
+
+    
+    try{
+        $sql = "UPDATE locker SET lockerID='$up_lockerId', roomNo ='$up_roomNo' WHERE lockerID = '$currentLockerId'";
+        mysqli_query($conn, $sql);
+    
+        echo "Locker details updated";
+
+    }catch(mysqli_sql_exception $e){
+        if (strpos($e->getMessage(), 'Duplicate entry') !== false) {
+            // Display a custom error message
+            echo "<script>alert('Already have that ID. please use another ID.');</script>";
+        } else {
+            // Display a generic error message for other SQL errors
+            echo "<script>alert('An error occurred while updating the locker information.');</script>";
+        }
+    }
+
+}
+
+if(isset($_POST['lockerDelete'])){
+    $del_LockerId = $_POST['delete_Lockerid'];
+
+    $sql = "DELETE FROM locker WHERE lockerID = '$del_LockerId'";
+    
+    if (mysqli_query($conn, $sql)) {
+        echo "Locker details Deleted";
+    } else {
+        echo "Locker details delete Error: " . $sql . "<br>" . mysqli_error($conn);
+    }
+
+}
+
+if(isset($_POST['addLocker'])){
+    $new_LockerId = $_POST['new_lockerid'];
+    $roomId = $_POST['new_room'];
+    $lockerDamgeSt = $_POST['lockerDmgState'];
+
+    try{
+        $sql = "INSERT INTO locker(lockerID, demageState, roomNo) VALUES ('$new_LockerId','$lockerDamgeSt','$roomId')";
+        mysqli_query($conn, $sql);
+    
+        echo "New Locker details Added";
+        
+    }catch(mysqli_sql_exception $e){
+        if (strpos($e->getMessage(), 'Duplicate entry') !== false) {
+            // Display a custom error message
+            echo "<script>alert('Already have that ID. please use another ID.');</script>";
+        } else {
+            // Display a generic error message for other SQL errors
+            echo "<script>alert('An error occurred while updating the locker information.');</script>";
+        }
+    }
+
+}
+
+
+
+// ------------------------------------------------------------------------ ALL Functions of RACKS -----------------------------------------
+if(isset($_POST['rackStatChnge'])){
+    $rackId = $_POST['rackid'];
+    $damageStatus = $_POST['rackDamgeBtn'];
+
+    $sql = "UPDATE rack SET demageState = '$damageStatus' WHERE rackID = '$rackId';";
+    
+    if (mysqli_query($conn, $sql)) {
+        echo "Rack status Changed";
+    } else {
+        echo "Rack status Changing Error: " . $sql . "<br>" . mysqli_error($conn);
+    }
+
+}
+
+if(isset($_POST['updaterack'])){
+    $currentRackId = $_POST['current_rackid'];
+    $up_rackId = $_POST['up_Rackid'];
+    $up_roomNo = $_POST['up_room'];
+
+    
+    try{
+        $sql = "UPDATE rack SET rackID='$up_rackId', roomNo ='$up_roomNo' WHERE rackID = '$currentRackId'";
+        mysqli_query($conn, $sql);
+    
+        echo "Rack details updated";
+
+    }catch(mysqli_sql_exception $e){
+        if (strpos($e->getMessage(), 'Duplicate entry') !== false) {
+            // Display a custom error message
+            echo "<script>alert('Already have that ID. please use another ID.');</script>";
+        } else {
+            // Display a generic error message for other SQL errors
+            echo "<script>alert('An error occurred while updating the rack information.');</script>";
+        }
+    }
+
+}
+
+if(isset($_POST['rackDelete'])){
+    $del_RackId = $_POST['delete_Rackid'];
+
+    $sql = "DELETE FROM rack WHERE rackID = '$del_RackId'";
+    
+    if (mysqli_query($conn, $sql)) {
+        echo "Rack details Deleted";
+    } else {
+        echo "Rack details delete Error: " . $sql . "<br>" . mysqli_error($conn);
+    }
+
+}
+
+if(isset($_POST['addRack'])){
+    $new_RackId = $_POST['new_rackid'];
+    $roomId = $_POST['new_room'];
+    $rackDamgeSt = $_POST['rackDmgState'];
+
+    try{
+        $sql = "INSERT INTO rack(rackID, demageState, roomNo) VALUES ('$new_RackId','$rackDamgeSt','$roomId')";
+        mysqli_query($conn, $sql);
+    
+        echo "New Rack details Added";
+        
+    }catch(mysqli_sql_exception $e){
+        if (strpos($e->getMessage(), 'Duplicate entry') !== false) {
+            // Display a custom error message
+            echo "<script>alert('Already have that ID. please use another ID.');</script>";
+        } else {
+            // Display a generic error message for other SQL errors
+            echo "<script>alert('An error occurred while updating the rack information.');</script>";
         }
     }
 
