@@ -5,7 +5,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Admin DashBoard</title>
         <!-- CSS Files -->
         <?php include '../libraries/styles.php';?>
 </head>
@@ -59,9 +59,9 @@
             </div>
             <div class="col-4 align-self-center  " style=height:50%; >
                     <div class="col-md-4 d-flex justify-content-center m-auto mt-4"style="width: 100%; height: 80%;">
-                        <div class="card card-secondary" style="width: 100%; height: 100%; cursor: pointer;" role="button" onclick="location.href='roomAdd.php';">
+                        <div class="card card-secondary" style="width: 100%; height: 100%; cursor: pointer;" role="button" onclick="location.href='manageRooms.php';">
                             <div class="card-body skew-shadow position-relative">
-                                <h5 class="op-8 text-center position-absolute top-50 start-50 translate-middle fs-2">ROOM DETAILS</h5>
+                                <h5 class="op-8 text-center position-absolute top-50 start-50 translate-middle fs-2">MANAGE ROOMS</h5>
                             </div>
                         </div>
                     </div>

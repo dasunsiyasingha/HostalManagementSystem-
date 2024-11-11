@@ -50,7 +50,7 @@
                         </div>
                         <!-- Dropdown Input room number -->
                         <div class="form-group mb-3">
-                                    <label for="stroom">Room No</label>
+                                    <label for="stroom">Available Rooms No</label>
                                     <div class="input-group">
                                         <input type="text" class="form-control" id="stroom" name="stroom"  placeholder="Enter student room" aria-label="Student Room" required>
                                         <button class="btn btn-primary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -64,15 +64,17 @@
                                            
                                             <?php
                                                     
-                                                    $sql = "SELECT roomNo FROM room";
+                                                    $sql = "SELECT roomNo FROM room LEFT JOIN student ON room.roomNo = student.stRoomNo GROUP BY room.roomNo HAVING COUNT(student.stRoomNo) < 4;";
                                                     $results = $conn->query($sql);
 
                                                     if($results->num_rows > 0)
                                                     {
                                                     foreach($results as $result)
                                                      {?>
-                                                        <li <a class="dropdown-item" href="#" onclick="stroom('<?php echo htmlentities($result['roomNo']); ?>')" ><?php echo htmlentities($result['roomNo']); ?></a></li>
+                                                        <li> <a class="dropdown-item" href="#" onclick="stroom('<?php echo htmlentities($result['roomNo']); ?>')" ><?php echo htmlentities($result['roomNo']); ?></a></li>
                                                 <?php  }}?>
+
+                                            
                                         </ul>
                                     </div>
                                 </div>
@@ -125,9 +127,6 @@
                                     //     })
                                     // }
                                 </script>
-
-
-
 
                                 <div class="card-action text-center d-flex justify-content-between">
                                                     <button class="btn"></button>

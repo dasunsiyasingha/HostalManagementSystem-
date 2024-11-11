@@ -58,7 +58,11 @@
                                     echo "<td>{$row['room_no']}</td>";
                                     echo "<td>";
                                     if(!empty($row['student_ids'])){
-                                      echo "{$row['student_ids']}";
+                                      $stu_ids = explode(', ', $row['student_ids']);
+                                      foreach ($stu_ids as $stu_id) {
+                                        echo "{$stu_id}  <br>";
+                                      }
+
                                     }else{
                                       echo "No members";
                                     }

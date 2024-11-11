@@ -39,7 +39,7 @@
                             <th>timestamps</th>
                             <th>Security ID</th>
                             <th>Note</th> 
-                            <th>status</th>
+                            <!-- <th>status</th> -->
                             <th>Start Time</th>
                             <th>Leave Time</th>
                           </tr>
@@ -49,7 +49,7 @@
                             <th>timestamps</th>
                             <th>Security ID</th>
                             <th>Note</th> 
-                            <th>status</th>
+                            <!-- <th>status</th> -->
                             <th>Start Time</th>
                             <th>Leave Time</th>
                           </tr>
@@ -64,7 +64,6 @@
                                       <td>".$row['timestamps']."</td>
                                       <td>".$row['sid']."</td>
                                       <td>".$row['note']."</td>
-                                      <td>".$row['status']."</td>
                                       <td>".$row['start_time']."</td>
                                       <td>".$row['end_time']."</td>
                                       </tr>";
