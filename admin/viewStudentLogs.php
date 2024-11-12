@@ -31,23 +31,24 @@
                   <div class="card-body">
                     <div class="table-responsive">
                       <table
-                        id="basic-datatables"
-                        class="display table table-striped table-hover"
+                      id="basic-datatables"
+                      class="display table table-striped table-hover"
                       >
                         <thead>
                           <tr>
-                            <th>timestamps</th>
+                            <!-- <th>timestamps</th> -->
                             <th>studentID</th>
                             <th>in time</th>
                             <th>in Marked by</th>
                             <th>out time</th>
                             <th>out Marked by</th>
                             <th>note</th>
+
                           </tr>
                         </thead>
                         <tfoot>
                           <tr>
-                          <th>timestamps</th>
+                          <!-- <th>timestamps</th> -->
                             <th>studentID</th>
                             <th>in time</th>
                             <th>in Marked by</th>
@@ -63,7 +64,7 @@
                             if ($result = $conn->query($sql)) {
                               while ($row = $result->fetch_assoc()) {
                                 echo "<tr>
-                                      <td>".$row['timestamps']."</td>
+                                    <!--  <td>".$row['timestamps']."</td> -->
                                       <td>".$row['studentID']."</td>
                                       <td>".$row['in_time']."</td>
                                       <td>".$row['inMarkedby']."</td>
@@ -124,6 +125,8 @@
                       .draw();
                   });
 
+                   
+
                 column
                   .data()
                   .unique()
@@ -134,29 +137,33 @@
                     );
                   });
               });
+              
           },
+
+          
         });
 
-        // Add Row
-        $("#add-row").DataTable({
-          pageLength: 5,
-        });
+        // // Add Row
+        // $("#add-row").DataTable({
+        //   pageLength: 5,
+        // });
 
-        var action =
-          '<td> <div class="form-button-action"> <button type="button" data-bs-toggle="tooltip" title="" class="btn btn-link btn-primary btn-lg" data-original-title="Edit Task"> <i class="fa fa-edit"></i> </button> <button type="button" data-bs-toggle="tooltip" title="" class="btn btn-link btn-danger" data-original-title="Remove"> <i class="fa fa-times"></i> </button> </div> </td>';
+        // var action =
+        //   '<td> <div class="form-button-action"> <button type="button" data-bs-toggle="tooltip" title="" class="btn btn-link btn-primary btn-lg" data-original-title="Edit Task"> <i class="fa fa-edit"></i> </button> <button type="button" data-bs-toggle="tooltip" title="" class="btn btn-link btn-danger" data-original-title="Remove"> <i class="fa fa-times"></i> </button> </div> </td>';
 
-        $("#addRowButton").click(function () {
-          $("#add-row")
-            .dataTable()
-            .fnAddData([
-              $("#addName").val(),
-              $("#addPosition").val(),
-              $("#addOffice").val(),
-              action,
-            ]);
-          $("#addRowModal").modal("hide");
-        });
+        // $("#addRowButton").click(function () {
+        //   $("#add-row")
+        //     .dataTable()
+        //     .fnAddData([
+        //       $("#addName").val(),
+        //       $("#addPosition").val(),
+        //       $("#addOffice").val(),
+        //       action,
+        //     ]);
+        //   $("#addRowModal").modal("hide");
+        // });
       });
+      
     </script>
 </body>
 </html>

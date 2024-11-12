@@ -18,6 +18,7 @@
     <div class="row " style="width:100vw;">
             <div class="row m-auto" style="width:100%;">
                 <!-- HEADER LINE -->
+                <div id="liveAlertPlaceholder" class="mt-4"></div>
                 <div class="row" style=height:30%; >
                         <div class="col-12 d-flex justify-content-center m-auto mt-4 bg-primary p-4 card-body skew-shadow position-relative rounded-2">
                             <h5 class="op-8 text-center position-absolute top-50 start-50 translate-middle fs-2" style="color:white;">Update Rooms Details</h5>
@@ -2363,7 +2364,21 @@
             </div>
     </div>
     </div>
-    
+    <script>
+        //FOR ALERT BOX
+        const alertPlaceholder = document.getElementById('liveAlertPlaceholder')
+        const appendAlert = (message, type) => {
+            const wrapper = document.createElement('div')
+            wrapper.innerHTML = [
+                `<div class="alert alert-${type} alert-dismissible text-${type} rounded-3 " role="alert">`,
+                `   <div>${message}</div>`,
+                '   <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>',
+                '</div>'
+            ].join('')
+
+            alertPlaceholder.append(wrapper)
+                                    }
+    </script>
 
     <!-- Include Bootstrap JS Bundle with Popper.js -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
@@ -2384,11 +2399,12 @@ if(isset($_POST['deskStatChnge'])){
         $sql = "UPDATE desk SET demageState = '$damageStatus' WHERE deskID = '$deskId';";
         mysqli_query($conn, $sql);
 
-        echo "Desk status Changed";
+        // echo "Desk status Changed";
+        echo "<script>history.back();</script>";
 
     }catch(mysqli_sql_exception $e){
         // Display a generic error message for other SQL errors
-        echo "<script>alert('An error occurred while Changing the Desk status.');</script>";
+        echo "<script>appendAlert('An error occurred while Changing the Desk status.', 'danger');</script>";
     }
 
 }
@@ -2401,14 +2417,18 @@ if(isset($_POST['updatedesk'])){
         $sql = "UPDATE desk SET deskID='$up_deskId', roomNo ='$up_roomNo' WHERE deskID = '$currentDeskId'";
         mysqli_query($conn, $sql);
     
-        echo "Desk details updated";
+        // echo "Desk details updated";
+        echo "<script>history.back();</script>";
     }catch(mysqli_sql_exception $e){
         if (strpos($e->getMessage(), 'Duplicate entry') !== false) {
             // Display a custom error message
-            echo "<script>alert('Already have that ID. please use another ID.');</script>";
+            // echo "<script>alert('Already have that ID. please use another ID.');</script>";
+            echo "<script>appendAlert('Already have that Desk ID. please use another ID.', 'warning');</script>";
+
         } else {
             // Display a generic error message for other SQL errors
-            echo "<script>alert('An error occurred while updating the desk information.');</script>";
+            // echo "<script>alert('An error occurred while updating the desk information.');</script>";
+            echo "<script>appendAlert('An error occurred while updating the desk information.', 'danger');</script>";
         }
     }
 
@@ -2421,9 +2441,11 @@ if(isset($_POST['deskDelete'])){
     $sql = "DELETE FROM desk WHERE deskID = '$del_DeskId'";
     
     if (mysqli_query($conn, $sql)) {
-        echo "Desk details Deleted";
+        // echo "Desk details Deleted";
+        echo "<script>history.back();</script>";
     } else {
-        echo "Desk details delete Error: " . $sql . "<br>" . mysqli_error($conn);
+        // echo "Desk details delete Error: " . $sql . "<br>" . mysqli_error($conn);
+        echo "<script>appendAlert('An error occurred while deleting the desk information', 'danger');</script>";
     }
 
 }
@@ -2433,12 +2455,23 @@ if(isset($_POST['addDesk'])){
     $roomId = $_POST['new_room'];
     $deskDamgeSt = $_POST['deskDmgState'];
 
-    $sql = "INSERT INTO desk(deskID, demageState, roomNo) VALUES ('$new_DeskId','$deskDamgeSt','$roomId')";
+    try{
+        $sql = "INSERT INTO desk(deskID, demageState, roomNo) VALUES ('$new_DeskId','$deskDamgeSt','$roomId')";
+        mysqli_query($conn, $sql);
     
-    if (mysqli_query($conn, $sql)) {
-        echo "New Desk details Added";
-    } else {
-        echo "New Desk details Add Error: " . $sql . "<br>" . mysqli_error($conn);
+        // echo "New Chair details Added";
+        echo "<script>appendAlert(' Added New Desk information', 'success');</script>";
+        
+    }catch(mysqli_sql_exception $e){
+        if (strpos($e->getMessage(), 'Duplicate entry') !== false) {
+            // Display a custom error message
+            // echo "<script>alert('Already have that ID. please use another ID.');</script>";
+            echo "<script>appendAlert('Already have that Desk ID. please use another ID', 'warning');</script>";
+        } else {
+            // Display a generic error message for other SQL errors
+            // echo "<script>alert('An error occurred while updating the chair information.');</script>";
+            echo "<script>appendAlert('An error occurred while Added the Desk information', 'danger');</script>";
+        }
     }
 
 }
@@ -2452,9 +2485,11 @@ if(isset($_POST['chairStatChnge'])){
     $sql = "UPDATE chair SET demageState = '$damageStatus' WHERE chairID = '$chairId';";
     
     if (mysqli_query($conn, $sql)) {
-        echo "Chair status Changed";
+        // echo "Chair status Changed";
+        echo "<script>history.back();</script>";
     } else {
-        echo "Chair status Changing Error: " . $sql . "<br>" . mysqli_error($conn);
+        // echo "Chair status Changing Error: " . $sql . "<br>" . mysqli_error($conn);
+        echo "<script>appendAlert('An error occurred while changing the chair status', 'danger');</script>";
     }
 
 }
@@ -2469,15 +2504,19 @@ if(isset($_POST['updatechair'])){
         $sql = "UPDATE chair SET chairID='$up_chairId', roomNo ='$up_roomNo' WHERE chairID = '$currentChairId'";
         mysqli_query($conn, $sql);
     
-        echo "Chair details updated";
+        // echo "Chair details updated";
+        echo "<script>history.back();</script>";
 
     }catch(mysqli_sql_exception $e){
         if (strpos($e->getMessage(), 'Duplicate entry') !== false) {
             // Display a custom error message
-            echo "<script>alert('Already have that ID. please use another ID.');</script>";
+            // echo "<script>alert('Already have that ID. please use another ID.');</script>";
+            echo "<script>appendAlert('Already have that Chair ID. please use another ID', 'warning');</script>";
+
         } else {
             // Display a generic error message for other SQL errors
-            echo "<script>alert('An error occurred while updating the chair information.');</script>";
+            // echo "<script>alert('An error occurred while updating the chair information.');</script>";
+            echo "<script>appendAlert('An error occurred while updating the desk information', 'danger');</script>";
         }
     }
 
@@ -2489,9 +2528,11 @@ if(isset($_POST['chairDelete'])){
     $sql = "DELETE FROM chair WHERE chairID = '$del_ChairId'";
     
     if (mysqli_query($conn, $sql)) {
-        echo "Chair details Deleted";
+        // echo "Chair details Deleted";
+        echo "<script>history.back();</script>";
     } else {
-        echo "Chair details delete Error: " . $sql . "<br>" . mysqli_error($conn);
+        // echo "Chair details delete Error: " . $sql . "<br>" . mysqli_error($conn);
+        echo "<script>appendAlert('An error occurred while deleting the Chair information', 'danger');</script>";
     }
 
 }
@@ -2505,15 +2546,18 @@ if(isset($_POST['addChair'])){
         $sql = "INSERT INTO chair(chairID, demageState, roomNo) VALUES ('$new_ChairId','$chairDamgeSt','$roomId')";
         mysqli_query($conn, $sql);
     
-        echo "New Chair details Added";
+        // echo "New Chair details Added";
+        echo "<script>appendAlert(' Added New Chair information', 'success');</script>";
         
     }catch(mysqli_sql_exception $e){
         if (strpos($e->getMessage(), 'Duplicate entry') !== false) {
             // Display a custom error message
-            echo "<script>alert('Already have that ID. please use another ID.');</script>";
+            // echo "<script>alert('Already have that ID. please use another ID.');</script>";
+            echo "<script>appendAlert('Already have that Chair ID. please use another ID', 'warning');</script>";
         } else {
             // Display a generic error message for other SQL errors
-            echo "<script>alert('An error occurred while updating the chair information.');</script>";
+            // echo "<script>alert('An error occurred while updating the chair information.');</script>";
+            echo "<script>appendAlert('An error occurred while Added the chair information', 'danger');</script>";
         }
     }
 
@@ -2528,9 +2572,11 @@ if(isset($_POST['bedStatChnge'])){
     $sql = "UPDATE bed SET demageState = '$damageStatus' WHERE bedID = '$bedId';";
     
     if (mysqli_query($conn, $sql)) {
-        echo "Bed status Changed";
+        // echo "Bed status Changed";
+        echo "<script>history.back();</script>";
     } else {
-        echo "Bed status Changing Error: " . $sql . "<br>" . mysqli_error($conn);
+        // echo "Bed status Changing Error: " . $sql . "<br>" . mysqli_error($conn);
+        echo "<script>appendAlert('An error occurred while Changing the Bed Status', 'danger');</script>";
     }
 
 }
@@ -2545,15 +2591,19 @@ if(isset($_POST['updatebed'])){
         $sql = "UPDATE bed SET bedID='$up_bedId', roomNo ='$up_roomNo' WHERE bedID = '$currentBedId'";
         mysqli_query($conn, $sql);
     
-        echo "Bed details updated";
+        // echo "Bed details updated";
+        echo "<script>history.back();</script>";
 
     }catch(mysqli_sql_exception $e){
         if (strpos($e->getMessage(), 'Duplicate entry') !== false) {
             // Display a custom error message
-            echo "<script>alert('Already have that ID. please use another ID.');</script>";
+            // echo "<script>alert('Already have that ID. please use another ID.');</script>";
+            echo "<script>appendAlert('Already have that Bed ID. please use another ID', 'warning');</script>";
+            
         } else {
             // Display a generic error message for other SQL errors
-            echo "<script>alert('An error occurred while updating the bed information.');</script>";
+            // echo "<script>alert('An error occurred while updating the bed information.');</script>";
+            echo "<script>appendAlert('An error occurred while updating the bed information', 'danger');</script>";
         }
     }
 
@@ -2565,9 +2615,11 @@ if(isset($_POST['bedDelete'])){
     $sql = "DELETE FROM bed WHERE bedID = '$del_BedId'";
     
     if (mysqli_query($conn, $sql)) {
-        echo "Bed details Deleted";
+        // echo "Bed details Deleted";
+        echo "<script>history.back();</script>";
     } else {
-        echo "Bed details delete Error: " . $sql . "<br>" . mysqli_error($conn);
+        // echo "Bed details delete Error: " . $sql . "<br>" . mysqli_error($conn);
+        echo "<script>appendAlert('An error occurred while deleting the desk information', 'danger');</script>";
     }
 
 }
@@ -2581,15 +2633,19 @@ if(isset($_POST['addBed'])){
         $sql = "INSERT INTO bed(bedID, demageState, roomNo) VALUES ('$new_BedId','$bedDamgeSt','$roomId')";
         mysqli_query($conn, $sql);
     
-        echo "New Bed details Added";
+        // echo "New Bed details Added";
+        echo "<script>appendAlert('Added New Bed information', 'success');</script>";
+
         
     }catch(mysqli_sql_exception $e){
         if (strpos($e->getMessage(), 'Duplicate entry') !== false) {
             // Display a custom error message
-            echo "<script>alert('Already have that ID. please use another ID.');</script>";
+            // echo "<script>alert('Already have that ID. please use another ID.');</script>";
+            echo "<script>appendAlert('Already have that Bed ID. please use another ID', 'warning');</script>";
         } else {
             // Display a generic error message for other SQL errors
-            echo "<script>alert('An error occurred while updating the bed information.');</script>";
+            // echo "<script>alert('An error occurred while updating the bed information.');</script>";
+            echo "<script>appendAlert('An error occurred while updating the bed information', 'danger');</script>";
         }
     }
 
@@ -2606,9 +2662,11 @@ if(isset($_POST['mettressStatChnge'])){
     $sql = "UPDATE mettress SET demageState = '$damageStatus' WHERE mettressID = '$mettressId';";
     
     if (mysqli_query($conn, $sql)) {
-        echo "Mettress status Changed";
+        // echo "Mettress status Changed";
+        echo "<script>history.back();</script>";
     } else {
-        echo "Mettress status Changing Error: " . $sql . "<br>" . mysqli_error($conn);
+        // echo "Mettress status Changing Error: " . $sql . "<br>" . mysqli_error($conn);
+        echo "<script>appendAlert('An error occurred while Changing the Mettress status', 'danger');</script>";
     }
 
 }
@@ -2623,15 +2681,20 @@ if(isset($_POST['updatemettress'])){
         $sql = "UPDATE mettress SET mettressID='$up_mettressId', roomNo ='$up_roomNo' WHERE mettressID = '$currentMettressId'";
         mysqli_query($conn, $sql);
     
-        echo "Mettress details updated";
+        // echo "Mettress details updated";
+        echo "<script>history.back();</script>";
 
     }catch(mysqli_sql_exception $e){
         if (strpos($e->getMessage(), 'Duplicate entry') !== false) {
             // Display a custom error message
-            echo "<script>alert('Already have that ID. please use another ID.');</script>";
+            // echo "<script>alert('Already have that ID. please use another ID.');</script>";
+            echo "<script>appendAlert('Already have that Mettress ID. please use another ID', 'warning');</script>";
+
         } else {
             // Display a generic error message for other SQL errors
-            echo "<script>alert('An error occurred while updating the mettress information.');</script>";
+            // echo "<script>alert('An error occurred while updating the mettress information.');</script>";
+            echo "<script>appendAlert('An error occurred while updating the Mettress information', 'danger');</script>";
+
         }
     }
 
@@ -2643,9 +2706,12 @@ if(isset($_POST['mettressDelete'])){
     $sql = "DELETE FROM mettress WHERE mettressID = '$del_MettressId'";
     
     if (mysqli_query($conn, $sql)) {
-        echo "Mettress details Deleted";
+        // echo "Mettress details Deleted";
+        echo "<script>history.back();</script>";
     } else {
-        echo "Mettress details delete Error: " . $sql . "<br>" . mysqli_error($conn);
+        // echo "Mettress details delete Error: " . $sql . "<br>" . mysqli_error($conn);
+        echo "<script>appendAlert('An error occurred while deleting the mettress information', 'danger');</script>";
+
     }
 
 }
@@ -2659,15 +2725,19 @@ if(isset($_POST['addMettress'])){
         $sql = "INSERT INTO mettress(mettressID, demageState, roomNo) VALUES ('$new_MettressId','$mettressDamgeSt','$roomId')";
         mysqli_query($conn, $sql);
     
-        echo "New Mettress details Added";
+        // echo "New Mettress details Added";
+        echo "<script>appendAlert('Added new Mettress information', 'success');</script>";
+
         
     }catch(mysqli_sql_exception $e){
         if (strpos($e->getMessage(), 'Duplicate entry') !== false) {
             // Display a custom error message
-            echo "<script>alert('Already have that ID. please use another ID.');</script>";
+            // echo "<script>alert('Already have that ID. please use another ID.');</script>";
+            echo "<script>appendAlert('Already have that Mettress ID. please use another ID', 'warning');</script>";
         } else {
             // Display a generic error message for other SQL errors
-            echo "<script>alert('An error occurred while updating the mettress information.');</script>";
+            // echo "<script>alert('An error occurred while updating the mettress information.');</script>";
+            echo "<script>appendAlert('An error occurred while adding new Mettress information', 'danger');</script>";
         }
     }
 
@@ -2684,9 +2754,11 @@ if(isset($_POST['lockerStatChnge'])){
     $sql = "UPDATE locker SET demageState = '$damageStatus' WHERE lockerID = '$lockerId';";
     
     if (mysqli_query($conn, $sql)) {
-        echo "Locker status Changed";
+        // echo "Locker status Changed";
+        echo "<script>history.back();</script>";
     } else {
-        echo "Locker status Changing Error: " . $sql . "<br>" . mysqli_error($conn);
+        // echo "Locker status Changing Error: " . $sql . "<br>" . mysqli_error($conn);
+        echo "<script>appendAlert('An error occurred while changing the Locker information', 'danger');</script>";
     }
 
 }
@@ -2701,15 +2773,20 @@ if(isset($_POST['updatelocker'])){
         $sql = "UPDATE locker SET lockerID='$up_lockerId', roomNo ='$up_roomNo' WHERE lockerID = '$currentLockerId'";
         mysqli_query($conn, $sql);
     
-        echo "Locker details updated";
+        // echo "Locker details updated";
+        echo "<script>history.back();</script>";
 
     }catch(mysqli_sql_exception $e){
         if (strpos($e->getMessage(), 'Duplicate entry') !== false) {
             // Display a custom error message
-            echo "<script>alert('Already have that ID. please use another ID.');</script>";
+            // echo "<script>alert('Already have that ID. please use another ID.');</script>";
+            echo "<script>appendAlert('Already have that Locker ID. please use another ID', 'warning');</script>";
+
         } else {
             // Display a generic error message for other SQL errors
-            echo "<script>alert('An error occurred while updating the locker information.');</script>";
+            // echo "<script>alert('An error occurred while updating the locker information.');</script>";
+            echo "<script>appendAlert('An error occurred while updating the Locker information', 'danger');</script>";
+
         }
     }
 
@@ -2721,9 +2798,12 @@ if(isset($_POST['lockerDelete'])){
     $sql = "DELETE FROM locker WHERE lockerID = '$del_LockerId'";
     
     if (mysqli_query($conn, $sql)) {
-        echo "Locker details Deleted";
+        // echo "Locker details Deleted";
+        echo "<script>history.back();</script>";
     } else {
-        echo "Locker details delete Error: " . $sql . "<br>" . mysqli_error($conn);
+        // echo "Locker details delete Error: " . $sql . "<br>" . mysqli_error($conn);
+        echo "<script>appendAlert('An error occurred while deleting the Locker information', 'danger');</script>";
+
     }
 
 }
@@ -2737,15 +2817,19 @@ if(isset($_POST['addLocker'])){
         $sql = "INSERT INTO locker(lockerID, demageState, roomNo) VALUES ('$new_LockerId','$lockerDamgeSt','$roomId')";
         mysqli_query($conn, $sql);
     
-        echo "New Locker details Added";
+        // echo "New Locker details Added";            
+        echo "<script>appendAlert('Added New Locker information', 'success');</script>";
+
         
     }catch(mysqli_sql_exception $e){
         if (strpos($e->getMessage(), 'Duplicate entry') !== false) {
             // Display a custom error message
-            echo "<script>alert('Already have that ID. please use another ID.');</script>";
+            // echo "<script>alert('Already have that ID. please use another ID.');</script>";
+            echo "<script>appendAlert('Already have that Locker ID. please use another ID', 'warning');</script>";
         } else {
             // Display a generic error message for other SQL errors
-            echo "<script>alert('An error occurred while updating the locker information.');</script>";
+            // echo "<script>alert('An error occurred while updating the locker information.');</script>";
+            echo "<script>appendAlert('An error occurred while Adding New Locker information', 'danger');</script>";
         }
     }
 
@@ -2761,9 +2845,12 @@ if(isset($_POST['rackStatChnge'])){
     $sql = "UPDATE rack SET demageState = '$damageStatus' WHERE rackID = '$rackId';";
     
     if (mysqli_query($conn, $sql)) {
-        echo "Rack status Changed";
+        // echo "Rack status Changed";
+        echo "<script>history.back();</script>";
     } else {
-        echo "Rack status Changing Error: " . $sql . "<br>" . mysqli_error($conn);
+        // echo "Rack status Changing Error: " . $sql . "<br>" . mysqli_error($conn);
+        echo "<script>appendAlert('An error occurred while changing the Rack status', 'danger');</script>";
+
     }
 
 }
@@ -2778,15 +2865,18 @@ if(isset($_POST['updaterack'])){
         $sql = "UPDATE rack SET rackID='$up_rackId', roomNo ='$up_roomNo' WHERE rackID = '$currentRackId'";
         mysqli_query($conn, $sql);
     
-        echo "Rack details updated";
+        // echo "Rack details updated";
+        echo "<script>history.back();</script>";
 
     }catch(mysqli_sql_exception $e){
         if (strpos($e->getMessage(), 'Duplicate entry') !== false) {
             // Display a custom error message
-            echo "<script>alert('Already have that ID. please use another ID.');</script>";
+            // echo "<script>alert('Already have that ID. please use another ID.');</script>";
+            echo "<script>appendAlert('Already have that Rack ID. please use another ID', 'warning');</script>";
         } else {
             // Display a generic error message for other SQL errors
-            echo "<script>alert('An error occurred while updating the rack information.');</script>";
+            // echo "<script>alert('An error occurred while updating the rack information.');</script>";
+            echo "<script>appendAlert('An error occurred while updating the Rack information', 'danger');</script>";
         }
     }
 
@@ -2798,9 +2888,11 @@ if(isset($_POST['rackDelete'])){
     $sql = "DELETE FROM rack WHERE rackID = '$del_RackId'";
     
     if (mysqli_query($conn, $sql)) {
-        echo "Rack details Deleted";
+        // echo "Rack details Deleted";
+        echo "<script>history.back();</script>";
     } else {
-        echo "Rack details delete Error: " . $sql . "<br>" . mysqli_error($conn);
+        // echo "Rack details delete Error: " . $sql . "<br>" . mysqli_error($conn);
+        echo "<script>appendAlert('An error occurred while deleting the Rack information', 'danger');</script>";
     }
 
 }
@@ -2814,15 +2906,18 @@ if(isset($_POST['addRack'])){
         $sql = "INSERT INTO rack(rackID, demageState, roomNo) VALUES ('$new_RackId','$rackDamgeSt','$roomId')";
         mysqli_query($conn, $sql);
     
-        echo "New Rack details Added";
+        // echo "New Rack details Added";
+        echo "<script>appendAlert('Added New Rack information', 'success');</script>";
         
     }catch(mysqli_sql_exception $e){
         if (strpos($e->getMessage(), 'Duplicate entry') !== false) {
             // Display a custom error message
-            echo "<script>alert('Already have that ID. please use another ID.');</script>";
+            // echo "<script>alert('Already have that ID. please use another ID.');</script>";
+            echo "<script>appendAlert('Already have that Rack ID. please use another ID', 'warning');</script>";
         } else {
             // Display a generic error message for other SQL errors
-            echo "<script>alert('An error occurred while updating the rack information.');</script>";
+            // echo "<script>alert('An error occurred while updating the rack information.');</script>";
+            echo "<script>appendAlert('An error occurred while Adding New Rack information', 'danger');</script>";
         }
     }
 
