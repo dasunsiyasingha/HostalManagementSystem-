@@ -624,7 +624,7 @@ if(isset($_POST['addroom'])){
                 $chairId = $_POST['chair'."$i"];
                 $statusChair = $_POST['statuschair'."$i"];
                 if($statusChair != 'Damaged'){
-                    $statusChair = 'No damage';
+                    $statusChair = 'Good';
                 }
 
                 $sql="INSERT INTO  chair(chairID, demageState, roomNo) VALUES('$chairId','$statusChair','$roomNum')";
@@ -648,7 +648,7 @@ if(isset($_POST['addroom'])){
                 $deskId = $_POST['desk'."$i"];
                 $statusDesk = $_POST['statusdesk'."$i"];
                 if($statusDesk != 'Damaged'){
-                    $statusDesk = 'No damage';
+                    $statusDesk = 'Good';
                 }
 
                 $sql="INSERT INTO  desk(deskID, demageState, roomNo) VALUES('$deskId','$statusDesk','$roomNum')";
@@ -673,7 +673,7 @@ if(isset($_POST['addroom'])){
                 $bedId = $_POST['bed'."$i"];
                 $statusBed = $_POST['statusbed'."$i"];
                 if($statusBed != 'Damaged'){
-                    $statusBed = 'No damage';
+                    $statusBed = 'Good';
                 }
 
                 $sql="INSERT INTO  bed(bedID, demageState, roomNo) VALUES('$bedId','$statusBed','$roomNum')";
@@ -698,7 +698,7 @@ if(isset($_POST['addroom'])){
                 $mettressId = $_POST['mettress'."$i"];
                 $statusMettress = $_POST['statusmettress'."$i"];
                 if($statusMettress != 'Damaged'){
-                    $statusMettress = 'No damage';
+                    $statusMettress = 'Good';
                 }
 
                 $sql="INSERT INTO  mettress(mettressID, demageState, roomNo) VALUES('$mettressId','$statusMettress','$roomNum')";
@@ -723,7 +723,7 @@ if(isset($_POST['addroom'])){
                 $lockersId = $_POST['lockers'."$i"];
                 $statusLockers = $_POST['statuslockers'."$i"];
                 if($statusLockers != 'Damaged'){
-                    $statusLockers = 'No damage';
+                    $statusLockers = 'Good';
                 }
 
                 $sql="INSERT INTO  locker(lockerID, demageState, roomNo) VALUES('$lockersId','$statusLockers','$roomNum')";
@@ -748,7 +748,7 @@ if(isset($_POST['addroom'])){
                 $rackId = $_POST['rack'."$i"];
                 $statusRack = $_POST['statusrack'."$i"];
                 if($statusRack != 'Damaged'){
-                    $statusRack = 'No damage';
+                    $statusRack = 'Good';
                 }
 
                 $sql="INSERT INTO  rack(rackID, demageState, roomNo) VALUES('$rackId','$statusRack','$roomNum')";
