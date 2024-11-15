@@ -80,7 +80,7 @@
                   </div>
                 </div>
                 <div class="card-body">
-                  <!-- Modal -->
+                  <!-- ADD SECURITY PERSON Modal -->
                   <div class="modal fade" id="addsecurityperson" tabindex="-1" role="dialog" aria-hidden="true">
                     <div class="modal-dialog" role="document">
                       <div class="modal-content">
@@ -214,9 +214,9 @@
                               aria-sort="ascending" aria-label="Name: activate to sort column descending"
                               style="width: 363.613px;">Name</th>
                             
-                            <th tabindex="0" class="sorting" aria-controls="add-row" rowspan="1" colspan="1"
+                            <!-- <th tabindex="0" class="sorting" aria-controls="add-row" rowspan="1" colspan="1"
                               aria-label="pswd: activate to sort column descending"
-                              style="width: 260.613px;">Password</th>
+                              style="width: 260.613px;">Password</th> -->
 
                             <th style="width: 120.7px;" class="sorting" tabindex="0" aria-controls="add-row" rowspan="1"
                               colspan="1" aria-label="Action: activate to sort column ascending">Status</th>
@@ -229,49 +229,21 @@
                           <tr>
                             <th rowspan="1" colspan="1">Security Id</th>
                             <th rowspan="1" colspan="1">Name</th>
-                            <th rowspan="1" colspan="1">Password</th>
+                            <!-- <th rowspan="1" colspan="1">Password</th> -->
                             <th rowspan="1" colspan="1">Status</th>
                             <th rowspan="1" colspan="1">Action</th>
                           </tr>
                         </tfoot>
                         <tbody>
-                          <tr role="row" class="odd">
-                            <td class="sorting_1">Airi Satou</td>
-                            <td>Accountant</td>
-                            <td>password1234</td>
-
-                            <td>
-                              <div class="form-check form-switch">
-                                <input class="form-check-input status-toggle" type="checkbox" role="switch" id="st_status">
-                                <label class="form-check-label" for="st_status" id="statusLabel"></label>
-                              </div>
-                              
-                            </td>
-
-                            <td>
-                              <div class="form-button-action">
-                                <button type="button" title=""  data-bs-toggle="modal" data-bs-target="#updateSecurity" 
-                                  class="btn btn-link btn-primary btn-lg" data-original-title="Edit Task">
-                                  <i class="fa fa-edit"></i>
-                                </button>
-
-                              
-                                <button type="button" data-bs-toggle="tooltip" title="" class="btn btn-link btn-danger"
-                                  data-original-title="Remove">
-                                  <i class="fa fa-times"></i>
-                                </button>
-                              </div>
-                            </td>
-                          </tr>
 
                           <?php 
-                          $sql = "SELECT securityperson.sid AS s_id, securityperson.name AS s_name, securityperson.password AS s_pswd, securitylogs.status AS s_status FROM securityperson LEFT JOIN securitylogs ON securityperson.sid = securitylogs.sid AND securitylogs.timestamps = (SELECT MAX(timestamps) FROM securitylogs AS sl WHERE sl.sid = securityperson.sid);";
+                          $sql = "SELECT securityperson.sid AS s_id, securityperson.name AS s_name, securityperson.status AS s_status FROM securityperson LEFT JOIN securitylogs ON securityperson.sid = securitylogs.sid AND securitylogs.timestamps = (SELECT MAX(timestamps) FROM securitylogs AS sl WHERE sl.sid = securityperson.sid);";
                           if ($result = $conn->query($sql)) {
                             while($row = $result->fetch_assoc()){
                               echo '<tr role="row" class="odd">';
                               echo '<td>'.$row['s_id'].'</td>';
                               echo '<td>'.$row['s_name'].'</td>';
-                              echo '<td>'.$row['s_pswd'].'</td>';
+                              // echo '<td>'.$row['s_pswd'].'</td>';
                               // echo '<td>'.$row['s_status'].'</td>';
 
                               $color = !empty($row['s_status']) ? 'success' : 'danger';
@@ -432,7 +404,7 @@
                             <form role="form" method="post">
                             <input id="deleteid" name="delete_sid" type="text" class="form-control" value="'.$row['s_id'].'" style="visibility:hidden" />
                               <div class="modal-footer border-0">
-                                <button type="submit" id="update" name="update" class="btn btn-primary">
+                                <button type="submit" id="delete" name="delete" class="btn btn-primary">
                                   DELETE
                                 </button>
                                 <button type="button" class="btn btn-danger" data-dismiss="modal">
@@ -597,14 +569,19 @@ if(isset($_POST['register'])){
   $id = $_POST['id'];
   $name = $_POST['name'];
   $password = $_POST['password'];
+  $hashPswd = password_hash($password, PASSWORD_DEFAULT);
   echo $id;
 
   if($id == '' && $password == ''){
     echo "Please enter password and id";
   }else{
-    $sql="INSERT INTO securityperson(sid, name, password) VALUES('$id', '$name', '$password')";
-    if (mysqli_query($conn, $sql)) {
-        echo "room New record created successfully";
+    $sql="INSERT INTO securityperson(sid, name, password) VALUES('$id', '$name', '$hashPswd')";
+    $result = mysqli_query($conn, $sql);
+    if ($result) {
+        // echo "room New record created successfully";
+        echo "<script>window.location.reload();</script>";
+        // echo "<script>history.back();</script>";
+        exit();
     } else {
         echo "room Error: " . $sql . "<br>" . mysqli_error($conn);
     }
@@ -633,24 +610,65 @@ if(isset($_POST['statuschange'])){
         if($row && !empty($row['start_time'])){ // CHECK START TIME HAVE A VALUE
           echo "He is already working (ON)";
         }else {
-          $sql = "INSERT INTO securitylogs(sid, status, start_time, end_time) VALUES('$id', '$statusval', NOW(), '')";
-          if (mysqli_query($conn, $sql)) {
-              echo "New securitylogs record created successfully";
-          } else {
-              echo "securitylogs Error: " . $sql . "<br>" . mysqli_error($conn);
+          try{
+            $sql = "INSERT INTO securitylogs(sid, start_time, end_time) VALUES('$id', NOW(), '')";
+            if (!mysqli_query($conn, $sql)) {
+                // echo "New securitylogs record created successfully";
+                throw new Exception("Error inserting into securitylogs: " . mysqli_error($conn));
+  
+            }
+             // Get the last inserted ID to use as the foreign key in `securityperson`
+            $user_id = mysqli_insert_id($conn);
+
+            //  Update an existing row in `securityperson` table using the `user_id
+            $sql2 = "UPDATE securityperson SET status='$statusval' WHERE sid='$id';";
+            if (!mysqli_query($conn, $sql2)) {
+              throw new Exception("Error updating user_profiles: " . mysqli_error($conn));
+            }
+
+            mysqli_commit($conn);
+            echo "<script>history.back();</script>";
+            exit();
+
+
+
+          }catch(Exception $e){
+            mysqli_rollback($conn);
+            echo "Transaction failed: " . $e->getMessage();
           }
           
         }
       }
       $result->free();
+
+
     }else{
-      
-      $sql="UPDATE securitylogs SET note='$note', status='$statusval', end_time= NOW() WHERE sid='$id'  AND (end_time IS NULL OR end_time = '') ORDER BY timestamps DESC LIMIT 1";
-      if (mysqli_query($conn, $sql)) {
-          echo "securitylogs record UPDATE successfully";
-      } else {
-          echo "securitylogs Error: " . $sql . "<br>" . mysqli_error($conn);
+
+      try{
+        
+        $sql="UPDATE securitylogs SET note='$note', end_time= NOW() WHERE sid='$id'  AND (end_time IS NULL OR end_time = '') ORDER BY timestamps DESC LIMIT 1";
+        if (!mysqli_query($conn, $sql)) {
+          // echo "securitylogs record UPDATE successfully";
+          throw new Exception("Error updating into securitylogs: " . mysqli_error($conn));
+        }
+
+        // Get the last inserted ID to use as the foreign key in `securityperson`
+        $user_id = mysqli_insert_id($conn);
+
+        $sql2 = "UPDATE securityperson SET status='$statusval' WHERE sid='$id';";
+        if (!mysqli_query($conn, $sql2)) {
+          throw new Exception("Error updating user_profiles: " . mysqli_error($conn));
+        }
+
+        mysqli_commit($conn);
+        echo "<script>history.back();</script>";
+        exit();
+
+      }catch(Exception $e){
+        mysqli_rollback($conn);
+         echo "Transaction failed: " . $e->getMessage();
       }
+      
     }
   }
 
@@ -670,6 +688,18 @@ if(isset($_POST['update'])){
   }
 
 }
+
+if(isset($_POST['delete'])){
+  $delete_sid = $_POST['delete_sid'];
+
+  $sql = "DELETE FROM securityperson WHERE sid = '$delete_sid'";
+  if (mysqli_query($conn, $sql)) {
+    echo 'securityperson ID is DELETED..';
+  }else{
+    echo "securityperson Error: " . $sql . "<br>" . mysqli_error($conn);
+  }
+}
+
 
 } ?>
 
