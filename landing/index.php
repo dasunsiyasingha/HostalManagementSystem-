@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<<<<<<< Updated upstream
     <title>Hostel Management System</title>
     <!-- <?php include '../libraries/styles.php';?> -->
     <style>
@@ -81,3 +82,14 @@ operations efficiently</p>
 
 </body>
 </html>
+=======
+    <title>Document</title>
+</head>
+<body>
+    <div class="bg_img"  style="" ></div>
+
+
+    
+</body>
+</html>
+>>>>>>> Stashed changes
