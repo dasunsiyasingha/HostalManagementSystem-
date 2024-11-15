@@ -7,7 +7,6 @@
   }else{
 
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -19,22 +18,24 @@
      include '../libraries/styles.php';
      include '../libraries/script.php';?>
 
-     <style>
-      /* Green color for the switch when checked */
-                         /* Remove shadow for a clean look */
-      
-.status-toggle:checked {
-  background-color:#27e80d; /* Bootstrap green */
-  border-color: #bdf6b6;     /* Bootstrap green */
-  box-shadow: none;                    /* Remove shadow for a clean look */
-}
+  <style>
+    /* Green color for the switch when checked */
+    /* Remove shadow for a clean look */
 
-/* Optional: transition for a smooth color change */
-.status-toggle {
-  transition: background-color 0.6s ease, border-color 0.6s ease;
-}
+    .status-toggle:checked {
+      background-color: #27e80d;
+      /* Bootstrap green */
+      border-color: #bdf6b6;
+      /* Bootstrap green */
+      box-shadow: none;
+      /* Remove shadow for a clean look */
+    }
 
-     </style>
+    /* Optional: transition for a smooth color change */
+    .status-toggle {
+      transition: background-color 0.6s ease, border-color 0.6s ease;
+    }
+  </style>
 
 </head>
 
@@ -47,21 +48,22 @@
         <div class="row">
           <div class="col-6">
             <button type="button" class="mt-3 ms-5"
-            style="width:80%; height:40px; background-color:#275d8b;border: none; color: white; " data-bs-toggle="modal"
-            data-bs-target="#addsecurityperson">
-            <i class="bi bi-plus pt-4 pb-5 "></i> Add new security person
-          </button>
+              style="width:80%; height:40px; background-color:#275d8b;border: none; color: white; "
+              data-bs-toggle="modal" data-bs-target="#addsecurityperson">
+              <i class="bi bi-plus pt-4 pb-5 "></i> Add new security person
+            </button>
           </div>
           <div class="col-6">
-            
-          <button type="button" class="mt-3 ms-5"
-            style="width:80%; height:40px; background-color:#275d8b;border: none; color: white; " onclick="location.href='access_security.php';">
-            <i ></i> Access security
-          </button> 
-          </div>
-       
 
- 
+            <button type="button" class="mt-3 ms-5"
+              style="width:80%; height:40px; background-color:#275d8b;border: none; color: white; "
+              onclick="location.href='access_security.php';">
+              <i></i> Access security
+            </button>
+          </div>
+
+
+
           <div class="row m-auto">
             <!-- <div class="card-body"> -->
 
@@ -103,18 +105,22 @@
                               <div class="col-sm-12 ">
                                 <div class="form-group form-group-default">
                                   <label>Security ID</label>
-                                  <input id="addid" name="id" type="text" class="form-control" placeholder="Enter Security Id" required />
+                                  <input id="addid" name="id" type="text" class="form-control"
+                                    placeholder="Enter Security Id" required />
                                 </div>
                               </div>
                               <div class="col-sm-12">
                                 <div class="form-group form-group-default">
                                   <label>Name</label>
-                                  <input id="addname" name="name" type="text" class="form-control" placeholder="Enter name" />
+                                  <input id="addname" name="name" type="text" class="form-control"
+                                    placeholder="Enter name" />
                                 </div>
-                              </div><div class="col-sm-12">
+                              </div>
+                              <div class="col-sm-12">
                                 <div class="form-group form-group-default">
                                   <label>Password</label>
-                                  <input id="addpassword" name="password" type="password" class="form-control" required />
+                                  <input id="addpassword" name="password" type="password" class="form-control"
+                                    required />
                                 </div>
                               </div>
 
@@ -137,7 +143,7 @@
                             </div>
                           </form>
                         </div>
-                        
+
                       </div>
                     </div>
                   </div>
@@ -146,15 +152,15 @@
 
 
                   <!-- ooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo -->
-                    <!--  EDIT STATUS Modal -->
-                  
+                  <!--  EDIT STATUS Modal -->
+
 
                   <!-- 00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000 -->
 
 
-                   <!-- ooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo -->
-                    <!--  DELETE Modal -->
-                    <div class="modal fade" id="deletemodal" tabindex="-1" role="dialog" aria-hidden="true">
+                  <!-- ooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo -->
+                  <!--  DELETE Modal -->
+                  <div class="modal fade" id="deletemodal" tabindex="-1" role="dialog" aria-hidden="true">
                     <div class="modal-dialog" role="document">
                       <div class="modal-content">
                         <div class="modal-header border-0">
@@ -175,8 +181,9 @@
                             <div class="row">
                               <div class="col-sm-12 ">
                                 <div class="form-check form-switch">
-                                <input class="form-check-input" type="checkbox" role="switch" id="editstatusbox" name="statuscheck">
-                                <label class="form-check-label" for="flexSwitchCheckDefault">Status</label>
+                                  <input class="form-check-input" type="checkbox" role="switch" id="editstatusbox"
+                                    name="statuscheck">
+                                  <label class="form-check-label" for="flexSwitchCheckDefault">Status</label>
 
                                 </div>
                               </div>
@@ -193,7 +200,7 @@
                             </div>
                           </form>
                         </div>
-                        
+
                       </div>
                     </div>
                   </div>
@@ -209,11 +216,12 @@
                         <thead>
                           <tr role="row">
                             <th class="sorting" tabindex="0" aria-controls="add-row" rowspan="1" colspan="1"
-                              aria-label="Id: activate to sort column ascending" style="width: 249.612px;">Security Id</th>
+                              aria-label="Id: activate to sort column ascending" style="width: 249.612px;">Security Id
+                            </th>
                             <th class="sorting_asc" tabindex="0" aria-controls="add-row" rowspan="1" colspan="1"
                               aria-sort="ascending" aria-label="Name: activate to sort column descending"
                               style="width: 363.613px;">Name</th>
-                            
+
                             <!-- <th tabindex="0" class="sorting" aria-controls="add-row" rowspan="1" colspan="1"
                               aria-label="pswd: activate to sort column descending"
                               style="width: 260.613px;">Password</th> -->
@@ -428,7 +436,7 @@
 
                           
                           ?>
-                          
+
                         </tbody>
                       </table>
                     </div>
@@ -517,7 +525,7 @@
           var action =
             '<td> <div class="form-button-action"> <button type="button" data-bs-toggle="tooltip" title="" class="btn btn-link btn-primary btn-lg" data-original-title="Edit Task"> <i class="fa fa-edit"></i> </button> <button type="button" data-bs-toggle="tooltip" title="" class="btn btn-link btn-danger" data-original-title="Remove"> <i class="fa fa-times"></i> </button> </div> </td>';
 
-          
+
           $("#addRowButton").click(function () {
             $("#add-row")
               .dataTable()
@@ -702,4 +710,3 @@ if(isset($_POST['delete'])){
 
 
 } ?>
-
