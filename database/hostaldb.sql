@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 10, 2024 at 07:39 AM
+-- Generation Time: Nov 15, 2024 at 03:47 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -52,6 +52,18 @@ CREATE TABLE `bed` (
   `roomNo` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_danish_ci;
 
+--
+-- Dumping data for table `bed`
+--
+
+INSERT INTO `bed` (`bedID`, `demageState`, `roomNo`) VALUES
+('bed0901', 'Good', 34),
+('bed0934', 'Good', 34),
+('bed2323', 'Damaged', 1),
+('bed666', 'Good', 1),
+('bed7821', 'Good', 1),
+('bed7843', 'Good', 34);
+
 -- --------------------------------------------------------
 
 --
@@ -74,9 +86,11 @@ INSERT INTO `chair` (`chairID`, `demageState`, `roomNo`) VALUES
 ('11111', 'No damage', 35),
 ('1121212', 'No damage', 785),
 ('22222', 'No damage', 35),
-('ch2', 'Damaged', 2),
-('ch3', 'No damage', 2),
-('ch4', 'Damaged', 2);
+('ch1', 'Damaged', 34),
+('ch3', 'Damaged', 2),
+('ch4', 'Damaged', 2),
+('ch4352', 'Good', 2),
+('ch9653', 'Good', 2);
 
 -- --------------------------------------------------------
 
@@ -96,10 +110,11 @@ CREATE TABLE `desk` (
 
 INSERT INTO `desk` (`deskID`, `demageState`, `roomNo`) VALUES
 ('0oiu', 'No damage', 77777),
-('1212', 'No damage', 34),
-('25', 'No damage', 34),
-('3434', 'No damage', 34),
+('112', 'Good', 34),
+('25', 'Good', 34),
+('3434', 'Damaged', 34),
 ('412rv', 'No damage', 4352),
+('des812', 'Good', 2),
 ('fdjt6', 'No damage', 681),
 ('fwf', 'No damage', 542),
 ('t111', 'Damaged', 35),
@@ -119,6 +134,15 @@ CREATE TABLE `locker` (
   `roomNo` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_danish_ci;
 
+--
+-- Dumping data for table `locker`
+--
+
+INSERT INTO `locker` (`lockerID`, `demageState`, `roomNo`) VALUES
+('locker24', 'Good', 34),
+('locker83', 'Good', 1),
+('locker912', 'Good', 34);
+
 -- --------------------------------------------------------
 
 --
@@ -130,6 +154,14 @@ CREATE TABLE `mettress` (
   `demageState` varchar(45) DEFAULT NULL,
   `roomNo` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_danish_ci;
+
+--
+-- Dumping data for table `mettress`
+--
+
+INSERT INTO `mettress` (`mettressID`, `demageState`, `roomNo`) VALUES
+('metr4540', 'Good', 34),
+('metr888', 'Damaged', 1);
 
 -- --------------------------------------------------------
 
@@ -150,7 +182,12 @@ CREATE TABLE `rack` (
 INSERT INTO `rack` (`rackID`, `demageState`, `roomNo`) VALUES
 ('0', 'No damage', 34802),
 ('0', 'No damage', 905431),
-('0', 'No damage', 97321);
+('0', 'No damage', 97321),
+('rack675', 'Damaged', 34),
+('rack6876', 'Good', 1),
+('rack321', 'Good', 1),
+('rack873', 'Good', 34),
+('rack690', 'Damaged', 34);
 
 -- --------------------------------------------------------
 
@@ -245,7 +282,7 @@ CREATE TABLE `securityperson` (
 --
 
 INSERT INTO `securityperson` (`sid`, `name`, `password`, `status`, `mark_access`, `site_access`) VALUES
-('SEC0012', 'Jayee5656', '$2y$10$oeEEeKGitaaDKDrfcaSFpeTe4czyOIVdgjNrKtmhhFel/ob8wY0Wm', 1, 0, 0),
+('SEC0012', 'Jayee5656', '$2y$10$oeEEeKGitaaDKDrfcaSFpeTe4czyOIVdgjNrKtmhhFel/ob8wY0Wm', 1, 0, 1),
 ('SEC0013', 'Gunee7878', '$2y$10$3uZZd4AGgwNj.NzSbU6JA.WMssOWk38zXlssvDY..8CjMngCutm2a', 1, 1, 1),
 ('SEC0014', 'Somee3434', '$2y$10$mKb6fw19KCk9WfhfqVf2geQ0qGbwTrQkeLPzRggIVzZRPX7AKvjO.', 0, 0, 0);
 
@@ -293,9 +330,8 @@ CREATE TABLE `student` (
 --
 
 INSERT INTO `student` (`studentID`, `studentName`, `nic`, `batch`, `phoneNumber`, `pswd`, `stRoomNo`, `status`) VALUES
-('22', 'ss', '11121212', '1st Year', 2321, '$2y$10$yKDr7idVvfExwH0XcabUeOL4jQcYzPp2Kjs2b18HW/CPDeagekc76', 1, 0),
-('4536', 'yyks', '674632', '1st Year', 657252, '$2y$10$jibUIj1hy3leBEPPdnOu.O8X3NMofaKIupav0X/byhAlbKva0BzNa', 1, 1),
-('6766', 'dasun', '200186', '2nd Year', 34343434, '$2y$10$8644eiZ7j/Tggzr5HEqE2ezKBkkqHii34ndnTniKMe6F9mb5IuxNW', 4, 0);
+('2021t01224', 'Hewa Siyasingha Polgahamullage Dasun Nilnuwan', '200105500381', '2nd Year', 786569924, '$2y$10$jibUIj1hy3leBEPPdnOu.O8X3NMofaKIupav0X/byhAlbKva0BzNa', 1, 0),
+('6766', 'dasun', '200186', '2nd Year', 34343434, '$2y$10$8644eiZ7j/Tggzr5HEqE2ezKBkkqHii34ndnTniKMe6F9mb5IuxNW', 4, 1);
 
 -- --------------------------------------------------------
 
@@ -318,8 +354,8 @@ CREATE TABLE `studentlogs` (
 --
 
 INSERT INTO `studentlogs` (`timestamps`, `studentID`, `in_time`, `out_time`, `note`, `inMarkedby`, `outMarkedby`) VALUES
-('2024-11-09 19:52:49', '22', '2024-11-10 01:22:49', '2024-11-10 01:37:47', 'wuiefhweiofbyuwegfu9qbefywqeofhefvtguewvf', 'SEC0013', 'SEC0013'),
-('2024-11-09 19:53:43', '4536', '2024-11-10 01:23:43', '0000-00-00 00:00:00', NULL, 'SEC0013', NULL);
+('2024-11-09 19:53:43', '2021t01224', '2024-11-10 01:23:43', '2024-11-10 18:51:52', '', 'SEC0013', 'SEC0013'),
+('2024-11-10 06:46:31', '6766', '2024-11-10 12:16:31', '0000-00-00 00:00:00', NULL, 'SEC0013', NULL);
 
 -- --------------------------------------------------------
 
