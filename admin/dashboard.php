@@ -116,16 +116,29 @@
         <!-- CSS Files -->
         <?php include '../libraries/styles.php';?>
 
-    <style>
-        
-    </style>
+        <style>
+    /* Custom secondary color */
+    .card-a {
+        background-color: #521877; /* Purple shade */
+        color: white;
+    }
+    .card-b {
+        background-color: #7A1CAC; /* Purple shade */
+        color: white;
+    }
+    .card-c {
+        background-color: #AD49E1; /* Purple shade */
+        color: white;
+    }
+   
+</style>
 </head>
 <body >
     <!-- <div class="container text-center " style="width:100vw; height:100vh;"> -->
 
     <?php include '../components/header.php';?>
 <!-- CARDS ROW begin -->
-    <div class="container my-5">
+    <div class="container my-3">
         <div class="row">
             <!-- Students in Hostel Card -->
             <div class="col-md-4">
@@ -164,14 +177,14 @@
 <!-- CARDS ROW END -->
 
 
-        <div class="row border border-primary" style="width:100vw; height:100vh;">
-        <div class="row m-auto border border-primary" style="width:60%; height:60%;">
-            <div class="col-4 align-self-center " style=height:50%; >
+        <div class=" m-auto row " style="width:85vw; height:60vh;background-color:#8eddec;border-radius:3rem;">
+        <div class="row m-auto " style="width:80%; height:80%;">
+            <div class="col-6 align-self-center " style=height:25%; >
 
-                    <div class="col-md-4 d-flex justify-content-center m-auto mt-4"style="width: 100%; height: 80%;">
-                        <div class="card card-secondary" style="width: 100%; height: 100%; cursor: pointer;" role="button" onclick="location.href='manageStudent.php';">
+                    <div class="mh-3 col-md-4 d-flex justify-content-center m-auto mt-4"style="width: 100%; height: 80%;">
+                        <div class="card card-a" style="width: 100%; height: 100%; cursor: pointer;" role="button" onclick="location.href='manageStudent.php';">
                             <div class="card-body skew-shadow position-relative">
-                                <h5 class="op-8 text-center position-absolute top-50 start-50 translate-middle fs-2">MANAGE STUDENTS</h5>
+                                <h5 class="fw-bold op-8 text-center position-absolute top-50 start-50 translate-middle fs-4">MANAGE STUDENTS</h5>
                             </div>
                         </div>
                     </div>
@@ -179,49 +192,52 @@
 
                 </div>
             
-            <div class="col-4 align-self-center  " style=height:50%; >
+                <div class="col-6 align-self-center  " style=height:25%; >
                     <div class="col-md-4 d-flex justify-content-center m-auto mt-4"style="width: 100%; height: 80%;">
-                        <div class="card card-secondary" style="width: 100%; height: 100%; cursor: pointer;" role="button" onclick="location.href='manageRooms.php';">
+                        <div class="card card-a" style="width: 100%; height: 100%; cursor: pointer;" role="button" onclick="location.href='viewStudentLogs.php';">
                             <div class="card-body skew-shadow position-relative">
-                                <h5 class="op-8 text-center position-absolute top-50 start-50 translate-middle fs-2">MANAGE ROOMS</h5>
+                                <h5 class="fw-bold op-8 text-center position-absolute top-50 start-50 translate-middle fs-4">VIEW STUDENT LOGS</h5>
                             </div>
                         </div>
                     </div>
             </div>
 
+
+            <div class="col-6 align-self-center  " style=height:25%; >
+                    <div class="col-md-4 d-flex justify-content-center m-auto mt-4"style="width: 100%; height: 80%;">
+                        <div class="card card-b" style="width: 100%; height: 100%; cursor: pointer;" role="button" onclick="location.href='managesecurity.php';">
+                            <div class="card-body skew-shadow position-relative">
+                                <h5 class=" fw-bold op-8 text-center position-absolute top-50 start-50 translate-middle fs-4">MANAGE SECURITY PERSON</h5>
+                            </div>
+                        </div>
+                    </div>
+            </div>
             
-            <div class="col-4 align-self-center  " style=height:50%; >
+            
+            <div class="col-6 align-self-center  " style=height:25%; >
+                <div class="col-md-4 d-flex justify-content-center m-auto mt-4"style="width: 100%; height: 80%;">
+                    <div class="card card-b" style="width: 100%; height: 100%; cursor: pointer;" role="button" onclick="location.href='viewSecurityLogs.php';">
+                        <div class="card-body skew-shadow position-relative">
+                            <h5 class="fw-bold op-8 text-center position-absolute top-50 start-50 translate-middle fs-4">VIEW SECURITY LOGS</h5>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-6 align-self-center  " style=height:25%; >
                     <div class="col-md-4 d-flex justify-content-center m-auto mt-4"style="width: 100%; height: 80%;">
-                        <div class="card card-secondary" style="width: 100%; height: 100%; cursor: pointer;" role="button" onclick="location.href='managesecurity.php';">
+                        <div class="card card-c" style="width: 100%; height: 100%; cursor: pointer;" role="button" onclick="location.href='manageRooms.php';">
                             <div class="card-body skew-shadow position-relative">
-                                <h5 class="op-8 text-center position-absolute top-50 start-50 translate-middle fs-2">MANAGE SECURITY PERSON</h5>
+                                <h5 class="fw-bold op-8 text-center position-absolute top-50 start-50 translate-middle fs-4">MANAGE ROOMS</h5>
                             </div>
                         </div>
                     </div>
             </div>
-            <div class="col-4 align-self-center  " style=height:50%; >
+            <div class="col-6 align-self-center  " style=height:25%; >
                     <div class="col-md-4 d-flex justify-content-center m-auto mt-4"style="width: 100%; height: 80%;">
-                        <div class="card card-secondary" style="width: 100%; height: 100%; cursor: pointer;" role="button" onclick="location.href='viewSecurityLogs.php';">
+                        <div class="card card-c" style="width: 100%; height: 100%; cursor: pointer;" role="button" onclick="location.href='viewRoomDetails.php';">
                             <div class="card-body skew-shadow position-relative">
-                                <h5 class="op-8 text-center position-absolute top-50 start-50 translate-middle fs-2">VIEW SECURITY LOGS</h5>
-                            </div>
-                        </div>
-                    </div>
-            </div>
-            <div class="col-4 align-self-center  " style=height:50%; >
-                    <div class="col-md-4 d-flex justify-content-center m-auto mt-4"style="width: 100%; height: 80%;">
-                        <div class="card card-secondary" style="width: 100%; height: 100%; cursor: pointer;" role="button" onclick="location.href='viewStudentLogs.php';">
-                            <div class="card-body skew-shadow position-relative">
-                                <h5 class="op-8 text-center position-absolute top-50 start-50 translate-middle fs-2">VIEW STUDENT LOGS</h5>
-                            </div>
-                        </div>
-                    </div>
-            </div>
-            <div class="col-4 align-self-center  " style=height:50%; >
-                    <div class="col-md-4 d-flex justify-content-center m-auto mt-4"style="width: 100%; height: 80%;">
-                        <div class="card card-secondary" style="width: 100%; height: 100%; cursor: pointer;" role="button" onclick="location.href='viewRoomDetails.php';">
-                            <div class="card-body skew-shadow position-relative">
-                                <h5 class="op-8 text-center position-absolute top-50 start-50 translate-middle fs-2">VIEW ROOM DETAILS</h5>
+                                <h5 class="fw-bold op-8 text-center position-absolute top-50 start-50 translate-middle fs-4">VIEW ROOM DETAILS</h5>
                             </div>
                         </div>
                     </div>
