@@ -210,7 +210,7 @@
                     <!-- Chairs -->
                     <div class="col-4 col-md-2">
                         <div class="menu-card green text-white d-flex flex-column align-items-center justify-content-center" style="height: 15rem;">
-                        <img src="../assets/picture/adlog-bg (2).png" alt="Hostel Management Image" style="width:68rem;margin-top:-10rem">
+                        <!-- <img src="../assets/picture/adlog-bg (2).png" alt="Hostel Management Image" style="width:68rem;margin-top:-10rem"> -->
                             <span class="text-center">TOWAL RACK</span>
                         </div>
                     </div>
