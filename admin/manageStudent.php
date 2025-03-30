@@ -20,7 +20,7 @@
     
 </head>
 <body>
-    <div class="container border border-danger" style="height:100vh; width:100vw;" >
+    <div class="container border " style="height:100vh; width:100vw;" >
         <div class="row mt-5" style="width: 300px">
           <div class="col"><button type="button" onclick="location.href='registerStudent.php';" class="mt-3 ms-4 "
             style="width:80%; height:40px; background-color:#275d8b;border: none; color: white; ">

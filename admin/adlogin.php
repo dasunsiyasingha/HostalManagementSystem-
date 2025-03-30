@@ -14,10 +14,15 @@ $_SESSION['alogin']='';
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Document</title>
+  <style>
+  .bg-form-bg{
+    background-color: #afd2ef;
+  }
+  </style>
   <!-- CSS -->
   <?php include '../libraries/styles.php';?>
 </head>
-<body class="d-flex align-items-center justify-content-center py-4 bg-body-tertiary">
+<body class="d-flex align-items-center justify-content-center ">
 
   <div class="dropdown position-fixed bottom-0 end-0 mb-3 me-3 bd-mode-toggle">
     <button class="btn btn-bd-primary py-2 dropdown-toggle d-flex align-items-center" id="bd-theme" type="button" aria-expanded="false" data-bs-toggle="dropdown" aria-label="Toggle theme (light)">
@@ -48,35 +53,83 @@ $_SESSION['alogin']='';
     </ul>
   </div>
 
-  <main class="d-flex align-items-center justify-content-center" style="height: 100vh;">
-    <div class="bg-white p-5 rounded-3 shadow" style="min-width: 500px; width: 100%;">
-      <form role="form" method="post">
-        <h1 class="h3 mb-3 fw-normal text-center">Admin sign in</h1>
+  <main class="d-flex align-items-center justify-content-center vh-100 vw-100 m-0" style="background-color:#2C3E50;">
 
-        <small class="form-check-label text-danger" id="notice" style="visibility: hidden;">
-            Invalid Details.. Please Try Again!
-        </small>
-        <div class="form-floating mb-3">
-          <input type="text" class="form-control" name="username" id="username"  placeholder="username">
-          <label for="floatingInput">UserName</label>
+
+    <div class=" p-5  shadow " style=" width: 95%;height:85%; background-color:#8dddec;border-radius:2rem" >
+    <div class="row h-100 d-flex align-items-center ">
+        <!-- First Part -->
+        <div class=" col-5 d-flex align-items-center">
+
+        <div class="ms-5 bg-form-bg  shadow rounded" style="width: 80%; height: 65%;max-height:590px;padding:55px">
+
+                      <form role="form" method="post">
+                          <!-- Title -->
+                          <h1 class="h3 mb-4 fw-bold text-center text-primary" style="margin-top: -1rem;">Admin Sign in</h1>
+
+                          <!-- Subtitle -->
+                          <p class="text-center text-muted mb-2">
+                              Enter your credentials to access the admin dashboard.
+                          </p>
+
+                          <!-- Error Message -->
+                          <small class="form-check-label text-danger text-center d-block mb-3" id="notice" style="visibility: hidden;">
+                              Invalid Details.. Please Try Again!
+                          </small>
+
+                          <!-- Username Input -->
+                          <div class="form-floating mb-4 ">
+                              <input type="text" class="form-control border-primary shadow-sm" name="username" id="username" placeholder="Username">
+                              <label for="username">Username</label>
+                          </div>
+
+                          <!-- Password Input -->
+                          <div class="form-floating mb-4">
+                              <input type="password" class="form-control border-primary shadow-sm" name="password" id="password" placeholder="Password">
+                              <label for="password">Password</label>
+                          </div>
+
+                          <!-- Options Row -->
+                          <div class="d-flex justify-content-between align-items-center my-3">
+                              <!-- Remember Me -->
+                              <div class="form-check">
+                                  <input class="form-check-input" type="checkbox" value="remember-me" id="flexCheckDefault">
+                                  <label class="form-check-label text-muted" for="flexCheckDefault">
+                                      Remember Me
+                                  </label>
+                              </div>
+                              <!-- Forgot Password -->
+                              <a href="#" class="text-primary fw-bold" style="text-decoration: none;">Forgot Password?</a>
+                          </div>
+
+                          <!-- Submit Button -->
+                          <button type="submit" name="login" class="btn btn-primary w-100 py-2 shadow">
+                              Sign In
+                          </button>
+
+                  
+
+                        
+                      </form>
+                    
+
+
+                
+                
+                
+            
+          </div>  
+
         </div>
-        <div class="form-floating">
-          <input type="password" class="form-control" name="password" id="password"  placeholder="Password">
-          <label for="floatingPassword">Password</label>
+        <!-- Second Part -->
+        <div class="col-7 d-flex align-items-center justify-content-center text-white">
+        <div >
+                    <img src="../assets/picture/adlog-bg (2).png" alt="Hostel Management Image" style="width:68rem;margin-top:-10rem">
+                </div>
         </div>
+    </div>
 
-        <div class="form-check text-start my-3">
-          <input class="form-check-input" type="checkbox" value="remember-me" id="flexCheckDefault">
-          <label class="form-check-label" for="flexCheckDefault">
-            Remember me
-          </label>
-        </div>
-
-        
-        <button type="submit" name="login"  data-mdb-button-init data-mdb-ripple-init class="btn btn-primary w-100 py-2">Sign in</button>
-
-        
-      </form>
+      
     </div>
   </main>
 
